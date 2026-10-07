@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cyberpunk Bonoxs Robux Pricing Matrix</title>
+    <title>Bonoxs Mobile Robux Pricing Matrix</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -11,22 +11,20 @@
             theme: {
                 extend: {
                     colors: {
-                        cyber: {
-                            bg: '#030308',
-                            panel: 'rgba(10, 12, 24, 0.75)',
-                            border: 'rgba(0, 243, 255, 0.25)',
+                        bonoxs: {
+                            bg: '#05070c',
+                            card: '#0c101d',
+                            yellow: '#facc15',
+                            yellowHover: '#eab308',
+                            border: 'rgba(250, 204, 21, 0.25)',
                             cyan: '#00f3ff',
-                            purple: '#b000ff',
-                            pink: '#ff007f',
-                            green: '#00ff66',
-                            warning: '#ffb700'
+                            darkCard: 'rgba(12, 16, 29, 0.85)'
                         }
                     },
                     boxShadow: {
-                        'neon-cyan': '0 0 25px rgba(0, 243, 255, 0.35)',
-                        'neon-pink': '0 0 25px rgba(255, 0, 127, 0.35)',
-                        'neon-green': '0 0 25px rgba(0, 255, 102, 0.35)',
-                        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.6)'
+                        'neon-yellow': '0 0 25px rgba(250, 204, 21, 0.35)',
+                        'neon-cyan': '0 0 20px rgba(0, 243, 255, 0.25)',
+                        'mobile-glass': '0 10px 30px rgba(0, 0, 0, 0.8)'
                     }
                 }
             }
@@ -37,8 +35,8 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap');
         
         body {
-            background-color: #030308;
-            color: #f1f5f9;
+            background-color: #030407;
+            color: #f8fafc;
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
         }
@@ -47,48 +45,36 @@
             font-family: 'JetBrains Mono', monospace;
         }
 
-        .glass-card {
-            background: linear-gradient(135deg, rgba(13, 17, 33, 0.8) 0%, rgba(20, 24, 48, 0.6) 100%);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(0, 243, 255, 0.2);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        .glass-panel {
+            background: linear-gradient(135deg, rgba(15, 20, 36, 0.85) 0%, rgba(8, 11, 20, 0.95) 100%);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(250, 204, 21, 0.22);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7);
         }
 
-        .glass-card:hover {
-            border-color: rgba(0, 243, 255, 0.6);
-            box-shadow: 0 0 30px rgba(0, 243, 255, 0.3), inset 0 0 15px rgba(0, 243, 255, 0.1);
-            transform: translateY(-4px);
-        }
-
-        .cyber-button {
-            position: relative;
-            background: linear-gradient(135deg, #00f3ff 0%, #b000ff 100%);
-            border: none;
-            color: #030308;
+        .bonoxs-yellow-btn {
+            background: linear-gradient(135deg, #facc15 0%, #ca8a04 100%);
+            color: #05070c;
             font-weight: 800;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
+            transition: all 0.25s ease;
+            box-shadow: 0 0 20px rgba(250, 204, 21, 0.4);
         }
 
-        .cyber-button:hover {
-            box-shadow: 0 0 25px rgba(0, 243, 255, 0.8);
-            transform: translateY(-2px);
+        .bonoxs-yellow-btn:active {
+            transform: scale(0.96);
+            box-shadow: 0 0 10px rgba(250, 204, 21, 0.6);
         }
 
-        .cyber-input {
-            background: rgba(5, 7, 15, 0.9);
-            border: 1px solid rgba(0, 243, 255, 0.3);
-            color: #ffffff;
-            transition: all 0.3s ease;
-        }
-
-        .cyber-input:focus {
-            border-color: #00f3ff;
-            outline: none;
-            box-shadow: 0 0 20px rgba(0, 243, 255, 0.4);
+        .mobile-container {
+            max-width: 440px;
+            margin: 0 auto;
+            min-height: 100vh;
+            background-color: #05070c;
+            position: relative;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.9);
+            border-left: 1px solid rgba(250, 204, 21, 0.1);
+            border-right: 1px solid rgba(250, 204, 21, 0.1);
         }
 
         @keyframes scanline {
@@ -100,9 +86,10 @@
             position: absolute;
             top: 0; left: 0; right: 0;
             height: 2px;
-            background: linear-gradient(to right, transparent, rgba(0, 243, 255, 0.8), transparent);
-            animation: scanline 10s linear infinite;
+            background: linear-gradient(to right, transparent, rgba(250, 204, 21, 0.6), transparent);
+            animation: scanline 8s linear infinite;
             pointer-events: none;
+            z-index: 50;
         }
 
         canvas#bg-canvas {
@@ -114,122 +101,132 @@
             pointer-events: none;
             z-index: 0;
         }
+
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(250, 204, 21, 0.3);
+            border-radius: 4px;
+        }
     </style>
 </head>
-<body class="min-h-screen relative flex flex-col justify-between selection:bg-cyber-cyan selection:text-cyber-bg">
+<body class="flex justify-center items-center min-h-screen">
     
     <canvas id="bg-canvas"></canvas>
     <div class="scanline"></div>
 
-    <header class="relative z-10 glass-card border-b border-cyber-border sticky top-0 px-4 lg:px-10 py-4 flex flex-wrap items-center justify-between gap-4">
-        <div class="flex items-center space-x-3">
-            <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-cyber-cyan via-cyber-purple to-cyber-pink flex items-center justify-center shadow-neon-cyan animate-pulse">
-                <i class="fa-solid fa-cube text-cyber-bg text-2xl"></i>
-            </div>
-            <div>
-                <h1 class="text-xl lg:text-2xl font-black tracking-wider text-white flex items-center gap-3">
-                    BONOXS ROBUX <span class="text-xs px-2.5 py-1 rounded-full bg-cyber-cyan/20 text-cyber-cyan border border-cyber-cyan/40 font-mono">AUTOMATED +20 PRICING</span>
-                </h1>
-                <p class="text-xs text-slate-400 font-mono">Real-time Bonoxs Supplier Rate & Automated Markup Grid</p>
-            </div>
-        </div>
-
-        <div class="flex items-center gap-4 flex-wrap">
-            <div class="glass-card px-4 py-2 rounded-xl flex items-center gap-2 text-xs font-mono border border-cyber-border">
-                <span class="w-2.5 h-2.5 rounded-full bg-cyber-green animate-ping"></span>
-                <span class="text-slate-300">LIVE SYNC:</span>
-                <span class="text-cyber-green font-bold">ACTIVE</span>
-            </div>
-            <div class="glass-card px-4 py-2 rounded-xl flex items-center gap-2 text-xs font-mono border border-cyber-border">
-                <i class="fa-regular fa-clock text-cyber-cyan"></i>
-                <span id="live-clock" class="text-slate-200">00:00:00</span>
-            </div>
-            <button onclick="triggerSync()" class="cyber-button px-4 py-2.5 rounded-xl text-xs flex items-center gap-2">
-                <i class="fa-solid fa-rotate" id="sync-icon"></i> Force Sync
-            </button>
-        </div>
-    </header>
-
-    <main class="relative z-10 flex-grow p-4 lg:p-10 max-w-[1600px] mx-auto w-full flex flex-col gap-8">
+    <div class="mobile-container flex flex-col justify-between relative z-10">
         
-        <!-- Control Bar for Base Price & Markup -->
-        <div class="glass-card p-6 rounded-3xl grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
-            <div>
-                <label class="block text-xs font-mono text-slate-400 mb-2 uppercase tracking-wider">Base Supplier Rate (Bs / 1000 Robux)</label>
-                <div class="relative">
-                    <input type="number" id="base-price-input" value="647.00" step="0.50" class="cyber-input w-full rounded-2xl px-5 py-3.5 font-mono text-xl font-bold text-cyber-cyan" oninput="updatePricingGrid()">
-                    <div class="absolute right-4 top-4 text-xs text-slate-400 font-mono">Bs.</div>
+        <!-- Header -->
+        <header class="sticky top-0 z-40 glass-panel border-b border-yellow-500/20 px-5 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-bonoxs-yellow flex items-center justify-center shadow-neon-yellow">
+                    <i class="fa-solid fa-bolt text-bonoxs-bg text-lg font-black"></i>
+                </div>
+                <div>
+                    <div class="text-xs font-mono text-yellow-400 tracking-widest font-bold">BONOXS MOBILE</div>
+                    <h1 class="text-lg font-black text-white tracking-wide">ROBUX MATRIX</h1>
+                </div>
+            </div>
+            <div class="flex items-center gap-2">
+                <button onclick="triggerSync()" class="w-9 h-9 rounded-xl glass-panel flex items-center justify-center text-yellow-400 active:rotate-180 transition-transform duration-500">
+                    <i class="fa-solid fa-rotate text-sm" id="sync-icon"></i>
+                </button>
+                <div class="w-9 h-9 rounded-xl glass-panel flex items-center justify-center text-cyan-400 border border-cyan-500/30">
+                    <i class="fa-solid fa-shield-halved text-sm"></i>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Scrollable Area -->
+        <main class="flex-grow p-4 pb-24 flex flex-col gap-5 overflow-y-auto">
+            
+            <!-- Live Status & Markup Indicator Card -->
+            <div class="glass-panel p-4 rounded-2xl relative overflow-hidden">
+                <div class="absolute -right-6 -bottom-6 w-24 h-24 bg-yellow-500/10 rounded-full blur-xl pointer-events-none"></div>
+                <div class="flex justify-between items-center mb-3">
+                    <div class="flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+                        <span class="text-[11px] font-mono text-slate-300 tracking-wider">AUTO +20 BS MARKUP ACTIVE</span>
+                    </div>
+                    <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-yellow-500/20 text-yellow-300 font-bold border border-yellow-500/40">V2.6 LIVE</span>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3 pt-2 border-t border-yellow-500/15">
+                    <div>
+                        <label class="block text-[10px] font-mono text-slate-400 mb-1">BASE RATE (BS / 1000R$)</label>
+                        <div class="relative">
+                            <input type="number" id="base-rate-input" value="647.00" step="1" class="w-full bg-black/60 border border-yellow-500/30 rounded-xl px-3 py-2 text-sm font-mono font-bold text-yellow-400 focus:outline-none focus:border-yellow-400" oninput="updatePricingMatrix()">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-mono text-slate-400 mb-1">AUTO ADDED MARKUP</label>
+                        <div class="bg-black/60 border border-pink-500/30 rounded-xl px-3 py-2 text-sm font-mono font-bold text-pink-400 flex items-center justify-between">
+                            <span>+20.00</span>
+                            <span class="text-[10px] text-slate-400">Bs.</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div>
-                <div class="flex justify-between items-center mb-2">
-                    <label class="block text-xs font-mono text-slate-400 uppercase tracking-wider">Automated Markup (+)</label>
-                    <span id="markup-display" class="text-xs font-mono font-bold text-cyber-pink bg-cyber-pink/10 px-2 py-0.5 rounded">+20.00 Bs</span>
-                </div>
-                <input type="range" id="markup-slider" min="0" max="100" value="20" step="1" class="w-full accent-cyber-pink cursor-pointer py-2" oninput="updateMarkup(this.value)">
+            <!-- Search Filter Bar -->
+            <div class="relative">
+                <input type="text" id="search-input" placeholder="Search Robux amount (e.g. 800)..." class="w-full bg-black/50 border border-yellow-500/25 rounded-xl px-4 py-3 pl-10 text-xs font-mono text-white placeholder-slate-500 focus:outline-none focus:border-yellow-400 transition-all" oninput="filterPackages()">
+                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-500 text-xs"></i>
             </div>
 
-            <div class="flex items-center justify-end gap-4">
-                <div class="text-right">
-                    <span class="text-xs font-mono text-slate-400 block uppercase tracking-wider">Total Active Tiers</span>
-                    <span id="active-tiers-count" class="text-2xl font-black font-mono text-white">8 Packages</span>
-                </div>
-                <div class="relative">
-                    <input type="text" id="search-packages" placeholder="Search Robux..." class="cyber-input text-xs px-4 py-3 rounded-2xl w-44 font-mono" oninput="filterPackages()">
-                    <i class="fa-solid fa-magnifying-glass absolute right-4 top-3.5 text-slate-400"></i>
-                </div>
+            <!-- Robux Packages Grid List -->
+            <div id="packages-list" class="flex flex-col gap-3.5">
+                <!-- Populated dynamically via JavaScript -->
             </div>
-        </div>
 
-        <!-- Robux Pricing Cards Grid -->
-        <div id="pricing-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <!-- Dynamically populated via JS -->
-        </div>
+        </main>
 
-    </main>
+        <!-- Bottom Navigation Bar (Bonoxs Mobile Style) -->
+        <footer class="sticky bottom-0 z-40 glass-panel border-t border-yellow-500/20 px-6 py-3 flex items-center justify-between text-xs font-mono">
+            <div class="flex items-center gap-2 text-yellow-400">
+                <i class="fa-solid fa-wallet"></i>
+                <span id="total-tiers-count" class="font-bold">8 Packages</span>
+            </div>
+            <div class="text-[11px] text-slate-400 flex items-center gap-1.5">
+                <i class="fa-solid fa-circle-check text-emerald-400"></i>
+                <span>Instant Copy Ready</span>
+            </div>
+        </footer>
 
-    <footer class="relative z-10 glass-card border-t border-cyber-border py-6 px-8 text-center text-xs font-mono text-slate-400 flex flex-wrap items-center justify-between gap-4">
-        <div>
-            <span>Cyberpunk Bonoxs Autonomous Robux Terminal &copy; 2026</span>
-            <span class="mx-2 text-cyber-cyan">|</span>
-            <span>Automated +20 Markup Engine Active</span>
-        </div>
-        <div class="flex items-center gap-6">
-            <span class="text-cyber-green"><i class="fa-solid fa-shield-halved"></i> 100% Encrypted Sync</span>
-            <span class="text-cyber-purple"><i class="fa-solid fa-bolt"></i> Instant Clipboard Copy</span>
-        </div>
-    </footer>
+    </div>
 
-    <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-3 pointer-events-none"></div>
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="fixed top-5 left-1/2 transform -translate-x-1/2 z-50 flex flex-col gap-2 pointer-events-none w-11/12 max-w-sm"></div>
 
     <script>
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        function playSciFiSound(type = 'click') {
+        function playSound(type = 'click') {
             if (!audioCtx) return;
             if (audioCtx.state === 'suspended') { audioCtx.resume(); }
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
             osc.connect(gain);
             gain.connect(audioCtx.destination);
-            
             const now = audioCtx.currentTime;
+
             if (type === 'click') {
                 osc.type = 'sine';
-                osc.frequency.setValueAtTime(800, now);
-                osc.frequency.exponentialRampToValueAtTime(300, now + 0.08);
-                gain.gain.setValueAtTime(0.15, now);
-                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
+                osc.frequency.setValueAtTime(700, now);
+                osc.frequency.exponentialRampToValueAtTime(300, now + 0.05);
+                gain.gain.setValueAtTime(0.1, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.05);
                 osc.start(now);
-                osc.stop(now + 0.08);
+                osc.stop(now + 0.05);
             } else if (type === 'success') {
                 osc.type = 'triangle';
-                osc.frequency.setValueAtTime(587.33, now);
-                osc.frequency.setValueAtTime(880, now + 0.08);
-                gain.gain.setValueAtTime(0.2, now);
-                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
+                osc.frequency.setValueAtTime(523.25, now);
+                osc.frequency.setValueAtTime(783.99, now + 0.08);
+                gain.gain.setValueAtTime(0.15, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
                 osc.start(now);
-                osc.stop(now + 0.25);
+                osc.stop(now + 0.2);
             }
         }
 
@@ -243,20 +240,20 @@
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
 
-        for (let i = 0; i < 50; i++) {
+        for (let i = 0; i < 35; i++) {
             particles.push({
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
-                vx: (Math.random() - 0.5) * 0.6,
-                vy: (Math.random() - 0.5) * 0.6,
-                radius: Math.random() * 2 + 1,
-                color: Math.random() > 0.5 ? '#00f3ff' : '#b000ff'
+                vx: (Math.random() - 0.5) * 0.4,
+                vy: (Math.random() - 0.5) * 0.4,
+                radius: Math.random() * 1.5 + 0.8,
+                color: Math.random() > 0.4 ? '#facc15' : '#00f3ff'
             });
         }
 
         function animateCanvas() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.lineWidth = 0.5;
+            ctx.lineWidth = 0.4;
             for (let i = 0; i < particles.length; i++) {
                 let p = particles[i];
                 p.x += p.vx;
@@ -266,15 +263,15 @@
                 ctx.beginPath();
                 ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
                 ctx.fillStyle = p.color;
-                ctx.shadowBlur = 10;
+                ctx.shadowBlur = 8;
                 ctx.shadowColor = p.color;
                 ctx.fill();
 
                 for (let j = i + 1; j < particles.length; j++) {
                     let p2 = particles[j];
                     let dist = Math.hypot(p.x - p2.x, p.y - p2.y);
-                    if (dist < 120) {
-                        ctx.strokeStyle = `rgba(0, 243, 255, ${0.15 * (1 - dist / 120)})`;
+                    if (dist < 100) {
+                        ctx.strokeStyle = `rgba(250, 204, 21, ${0.12 * (1 - dist / 100)})`;
                         ctx.beginPath();
                         ctx.moveTo(p.x, p.y);
                         ctx.lineTo(p2.x, p2.y);
@@ -290,142 +287,130 @@
             { id: 1, robux: 400, badge: 'STARTER', icon: 'fa-gem' },
             { id: 2, robux: 800, badge: 'POPULAR', icon: 'fa-fire' },
             { id: 3, robux: 1700, badge: 'BEST VALUE', icon: 'fa-bolt' },
-            { id: 4, robux: 4500, badge: 'PRO GAMER', icon: 'fa-shield-halved' },
-            { id: 5, robux: 10000, badge: 'ELITE TYCOON', icon: 'fa-crown' },
-            { id: 6, robux: 22500, badge: 'LEGENDARY', icon: 'fa-dragon' },
-            { id: 7, robux: 40000, badge: 'CYBER WHALE', icon: 'fa-meteor' },
-            { id: 8, robux: 100000, badge: 'GODMODE', icon: 'fa-infinity' }
+            { id: 4, robux: 2700, badge: 'PRO TIER', icon: 'fa-shield-halved' },
+            { id: 5, robux: 3600, badge: 'ADVANCED', icon: 'fa-crown' },
+            { id: 6, robux: 4500, badge: 'ELITE GAMER', icon: 'fa-dragon' },
+            { id: 7, robux: 10000, badge: 'TYCOON', icon: 'fa-meteor' },
+            { id: 8, robux: 22500, badge: 'WHALE', icon: 'fa-infinity' }
         ];
 
         window.onload = function () {
-            startLiveClock();
-            updatePricingGrid();
+            updatePricingMatrix();
         };
 
-        function startLiveClock() {
-            setInterval(() => {
-                const now = new Date();
-                document.getElementById('live-clock').innerText = now.toTimeString().split(' ')[0];
-            }, 1000);
-        }
+        function updatePricingMatrix(filteredData = robuxPackages) {
+            const baseRateInput = parseFloat(document.getElementById('base-rate-input').value) || 647.00;
+            const markupFee = 20.00;
+            const container = document.getElementById('packages-list');
+            container.innerHTML = '';
 
-        function updatePricingGrid(filteredPackages = robuxPackages) {
-            const basePriceInput = parseFloat(document.getElementById('base-price-input').value) || 647.00;
-            const markupInput = parseFloat(document.getElementById('markup-slider').value) || 20.00;
-            const gridContainer = document.getElementById('pricing-grid');
-            gridContainer.innerHTML = '';
-
-            filteredPackages.forEach(pkg => {
-                // Base price calculation per package scale relative to 1000 robux unit base
-                const unitBasePrice = basePriceInput * (pkg.robux / 1000);
-                // Automated +markup added
-                const finalRetailPrice = unitBasePrice + markupInput;
-                const pricePerRobux = (finalRetailPrice / pkg.robux).toFixed(4);
+            filteredData.forEach(pkg => {
+                const supplierCost = baseRateInput * (pkg.robux / 1000);
+                const finalRetailPrice = supplierCost + markupFee;
+                const unitRate = (finalRetailPrice / pkg.robux).toFixed(4);
 
                 const card = document.createElement('div');
-                card.className = 'glass-card p-6 rounded-3xl flex flex-col justify-between relative overflow-hidden group';
+                card.className = 'glass-panel p-4 rounded-2xl flex flex-col gap-3 relative overflow-hidden group active:scale-[0.99] transition-transform';
                 card.innerHTML = `
-                    <div class="absolute -right-8 -top-8 w-32 h-32 bg-cyber-cyan/10 rounded-full blur-2xl group-hover:bg-cyber-cyan/30 transition-all pointer-events-none"></div>
-                    <div>
-                        <div class="flex justify-between items-center mb-4">
-                            <span class="text-[10px] font-mono px-2.5 py-1 rounded-full bg-cyber-cyan/15 text-cyber-cyan border border-cyber-cyan/30 font-bold tracking-wider">${pkg.badge}</span>
-                            <i class="fa-solid ${pkg.icon} text-cyber-cyan text-xl group-hover:scale-125 transition-transform"></i>
+                    <div class="absolute -right-6 -top-6 w-20 h-20 bg-yellow-500/10 rounded-full blur-xl group-hover:bg-yellow-500/25 transition-all pointer-events-none"></div>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-9 h-9 rounded-xl bg-yellow-500/15 border border-yellow-500/30 flex items-center justify-center text-yellow-400">
+                                <i class="fa-solid ${pkg.icon} text-sm"></i>
+                            </div>
+                            <div>
+                                <span class="text-xs font-mono px-2 py-0.5 rounded bg-yellow-500/20 text-yellow-300 font-bold border border-yellow-500/30">${pkg.badge}</span>
+                                <h3 class="text-lg font-black font-mono text-white tracking-tight mt-0.5">${pkg.robux.toLocaleString()} <span class="text-xs font-sans text-yellow-400 font-normal">ROBUX</span></h3>
+                            </div>
                         </div>
-                        <div class="mb-4">
-                            <div class="text-3xl font-black font-mono text-white tracking-tight flex items-baseline gap-1.5">
-                                ${pkg.robux.toLocaleString()} <span class="text-sm text-cyber-cyan font-normal font-sans">ROBUX</span>
-                            </div>
-                            <span class="text-xs font-mono text-slate-400">Rate: ${pricePerRobux} Bs / R$</span>
-                        </div>
-                        <div class="space-y-2 mb-6 font-mono text-xs border-t border-white/10 pt-4">
-                            <div class="flex justify-between text-slate-400">
-                                <span>Supplier Cost:</span>
-                                <span class="text-slate-300">${unitBasePrice.toFixed(2)} Bs</span>
-                            </div>
-                            <div class="flex justify-between text-slate-400">
-                                <span>Markup Added:</span>
-                                <span class="text-cyber-pink font-bold">+${markupInput.toFixed(2)} Bs</span>
-                            </div>
+                        <div class="text-right">
+                            <span class="text-[10px] font-mono text-slate-400 block">UNIT RATE</span>
+                            <span class="text-xs font-mono text-cyan-400 font-bold">${unitRate} Bs</span>
                         </div>
                     </div>
-                    <div>
-                        <div class="glass-card p-4 rounded-2xl bg-cyber-bg/60 border border-cyber-border mb-4 flex items-center justify-between">
-                            <div>
-                                <span class="text-[10px] font-mono text-slate-400 block">CLIENT RETAIL</span>
-                                <span class="text-2xl font-black font-mono text-cyber-cyan">${finalRetailPrice.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} Bs</span>
-                            </div>
+
+                    <div class="grid grid-cols-2 gap-2 bg-black/40 p-2.5 rounded-xl border border-yellow-500/10 font-mono text-[11px]">
+                        <div class="flex flex-col">
+                            <span class="text-slate-400">Supplier Base</span>
+                            <span class="text-slate-200 font-bold">${supplierCost.toFixed(2)} Bs</span>
                         </div>
-                        <button onclick="copyPriceToClipboard(${finalRetailPrice}, ${pkg.robux})" class="cyber-button w-full py-3 rounded-xl text-xs flex items-center justify-center gap-2">
-                            <i class="fa-regular fa-copy"></i> Copy Price
+                        <div class="flex flex-col text-right">
+                            <span class="text-slate-400">Markup Added</span>
+                            <span class="text-pink-400 font-bold">+${markupFee.toFixed(2)} Bs</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between pt-1">
+                        <div>
+                            <span class="text-[10px] font-mono text-slate-400 block">FINAL RETAIL PRICE</span>
+                            <span class="text-xl font-black font-mono text-yellow-400 tracking-tight">${finalRetailPrice.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} Bs</span>
+                        </div>
+                        <button onclick="copyPackageDetails(${finalRetailPrice}, ${pkg.robux})" class="bonoxs-yellow-btn px-4 py-2.5 rounded-xl text-xs flex items-center gap-2">
+                            <i class="fa-regular fa-copy"></i> Copy
                         </button>
                     </div>
                 `;
-                gridContainer.appendChild(card);
+                container.appendChild(card);
             });
 
-            document.getElementById('active-tiers-count').innerText = filteredPackages.length + ' Packages';
+            document.getElementById('total-tiers-count').innerText = filteredData.length + ' Packages';
         }
 
-        function updateMarkup(val) {
-            document.getElementById('markup-display').innerText = '+' + parseFloat(val).toFixed(2) + ' Bs';
-            playSciFiSound('click');
-            updatePricingGrid();
+        function filterPackages() {
+            playSound('click');
+            const query = document.getElementById('search-input').value.toLowerCase();
+            const filtered = robuxPackages.filter(p => p.robux.toString().includes(query) || p.badge.toLowerCase().includes(query));
+            updatePricingMatrix(filtered);
         }
 
         function triggerSync() {
-            playSciFiSound('click');
+            playSound('click');
             const icon = document.getElementById('sync-icon');
             icon.classList.add('fa-spin');
-            showToast('Querying Bonoxs live supplier APIs...', 'info');
+            showToast('Querying Bonoxs live mobile gateway rates...', 'info');
 
             setTimeout(() => {
                 icon.classList.remove('fa-spin');
                 const randomShift = (Math.random() * 2 - 1).toFixed(2);
-                const currentBase = parseFloat(document.getElementById('base-price-input').value);
-                const newBase = parseFloat((currentBase + parseFloat(randomShift)).toFixed(2));
-                document.getElementById('base-price-input').value = newBase;
-                updatePricingGrid();
-                playSciFiSound('success');
-                showToast('Successfully synced Bonoxs live market rates!', 'success');
-            }, 1000);
+                const currentRate = parseFloat(document.getElementById('base-rate-input').value);
+                const newRate = parseFloat((currentRate + parseFloat(randomShift)).toFixed(2));
+                document.getElementById('base-rate-input').value = newRate;
+                updatePricingMatrix();
+                playSound('success');
+                showToast('Successfully synchronized Bonoxs mobile rates!', 'success');
+            }, 900);
         }
 
-        function filterPackages() {
-            const query = document.getElementById('search-packages').value.toLowerCase();
-            const filtered = robuxPackages.filter(p => p.robux.toString().includes(query) || p.badge.toLowerCase().includes(query));
-            updatePricingGrid(filtered);
-        }
-
-        function copyPriceToClipboard(priceVal, robuxAmt) {
-            playSciFiSound('success');
-            const textToCopy = `${robuxAmt.toLocaleString()} Robux = ${priceVal.toFixed(2)} Bs (Bonoxs Auto Price)`;
+        function copyPackageDetails(priceVal, robuxAmt) {
+            playSound('success');
+            const textToCopy = `${robuxAmt.toLocaleString()} Robux = ${priceVal.toFixed(2)} Bs (Bonoxs Mobile Auto Price +20)`;
             const textarea = document.createElement('textarea');
             textarea.value = textToCopy;
             document.body.appendChild(textarea);
             textarea.select();
             document.execCommand('copy');
             document.body.removeChild(textarea);
-            showToast(`Copied ${robuxAmt.toLocaleString()} Robux price: ${priceVal.toFixed(2)} Bs`, 'success');
+            showToast(`Copied: ${robuxAmt.toLocaleString()} R$ = ${priceVal.toFixed(2)} Bs`, 'success');
         }
 
         function showToast(message, type = 'success') {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
             
-            let borderColor = 'border-cyber-cyan';
-            let icon = 'fa-circle-check text-cyber-cyan';
-            if (type === 'success') { borderColor = 'border-cyber-green'; icon = 'fa-circle-check text-cyber-green'; }
-            if (type === 'info') { borderColor = 'border-cyber-cyan'; icon = 'fa-circle-info text-cyber-cyan'; }
+            let borderColor = 'border-yellow-500/40';
+            let icon = 'fa-circle-check text-yellow-400';
+            if (type === 'success') { borderColor = 'border-emerald-500/50'; icon = 'fa-circle-check text-emerald-400'; }
+            if (type === 'info') { borderColor = 'border-cyan-500/50'; icon = 'fa-circle-info text-cyan-400'; }
 
-            toast.className = `glass-card p-4 rounded-2xl border ${borderColor} text-xs font-mono text-white flex items-center gap-3 shadow-glass pointer-events-auto transition-all transform translate-y-3 opacity-0`;
+            toast.className = `glass-panel p-3.5 rounded-2xl border ${borderColor} text-xs font-mono text-white flex items-center gap-3 shadow-2xl pointer-events-auto transition-all transform -translate-y-4 opacity-0`;
             toast.innerHTML = `<i class="fa-solid ${icon} text-base"></i><span>${message}</span>`;
             
             container.appendChild(toast);
-            setTimeout(() => toast.classList.remove('translate-y-3', 'opacity-0'), 10);
+            setTimeout(() => toast.classList.remove('-translate-y-4', 'opacity-0'), 10);
             setTimeout(() => {
-                toast.classList.add('translate-y-3', 'opacity-0');
+                toast.classList.add('-translate-y-4', 'opacity-0');
                 setTimeout(() => toast.remove(), 300);
-            }, 3500);
+            }, 3000);
         }
     </script>
 </body>
