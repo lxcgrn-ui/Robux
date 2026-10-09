@@ -1,417 +1,1031 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en" class="h-full select-none">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bonoxs Mobile Robux Pricing Matrix</title>
+    <title>Quantum Cyber-Glassmorphism Lucky Wheel</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        bonoxs: {
-                            bg: '#05070c',
-                            card: '#0c101d',
-                            yellow: '#facc15',
-                            yellowHover: '#eab308',
-                            border: 'rgba(250, 204, 21, 0.25)',
-                            cyan: '#00f3ff',
-                            darkCard: 'rgba(12, 16, 29, 0.85)'
-                        }
-                    },
-                    boxShadow: {
-                        'neon-yellow': '0 0 25px rgba(250, 204, 21, 0.35)',
-                        'neon-cyan': '0 0 20px rgba(0, 243, 255, 0.25)',
-                        'mobile-glass': '0 10px 30px rgba(0, 0, 0, 0.8)'
-                    }
-                }
-            }
-        }
-    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap');
-        
         body {
-            background-color: #030407;
-            color: #f8fafc;
             font-family: 'Inter', sans-serif;
-            overflow-x: hidden;
+            background: radial-gradient(circle at 50% 20%, #0f172a 0%, #020617 100%);
         }
-
-        .font-mono {
-            font-family: 'JetBrains Mono', monospace;
-        }
-
         .glass-panel {
-            background: linear-gradient(135deg, rgba(15, 20, 36, 0.85) 0%, rgba(8, 11, 20, 0.95) 100%);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border: 1px solid rgba(250, 204, 21, 0.22);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7);
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
         }
-
-        .bonoxs-yellow-btn {
-            background: linear-gradient(135deg, #facc15 0%, #ca8a04 100%);
-            color: #05070c;
-            font-weight: 800;
-            transition: all 0.25s ease;
-            box-shadow: 0 0 20px rgba(250, 204, 21, 0.4);
+        .wheel-glow {
+            filter: drop-shadow(0 0 40px rgba(99, 102, 241, 0.35));
         }
-
-        .bonoxs-yellow-btn:active {
-            transform: scale(0.96);
-            box-shadow: 0 0 10px rgba(250, 204, 21, 0.6);
-        }
-
-        .mobile-container {
-            max-width: 440px;
-            margin: 0 auto;
-            min-height: 100vh;
-            background-color: #05070c;
-            position: relative;
-            box-shadow: 0 0 50px rgba(0, 0, 0, 0.9);
-            border-left: 1px solid rgba(250, 204, 21, 0.1);
-            border-right: 1px solid rgba(250, 204, 21, 0.1);
-        }
-
-        @keyframes scanline {
-            0% { transform: translateY(-100%); }
-            100% { transform: translateY(1000%); }
-        }
-
-        .scanline {
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 2px;
-            background: linear-gradient(to right, transparent, rgba(250, 204, 21, 0.6), transparent);
-            animation: scanline 8s linear infinite;
-            pointer-events: none;
-            z-index: 50;
-        }
-
-        canvas#bg-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            pointer-events: none;
-            z-index: 0;
-        }
-
         ::-webkit-scrollbar {
-            width: 4px;
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.5);
         }
         ::-webkit-scrollbar-thumb {
-            background: rgba(250, 204, 21, 0.3);
-            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3);
         }
     </style>
 </head>
-<body class="flex justify-center items-center min-h-screen">
-    
-    <canvas id="bg-canvas"></canvas>
-    <div class="scanline"></div>
+<body class="h-full text-slate-100 flex flex-col justify-between relative overflow-x-hidden">
 
-    <div class="mobile-container flex flex-col justify-between relative z-10">
-        
-        <!-- Header -->
-        <header class="sticky top-0 z-40 glass-panel border-b border-yellow-500/20 px-5 py-4 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-bonoxs-yellow flex items-center justify-center shadow-neon-yellow">
-                    <i class="fa-solid fa-bolt text-bonoxs-bg text-lg font-black"></i>
+    <canvas id="particleCanvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
+
+    <header class="w-full bg-slate-900/40 backdrop-blur-xl border-b border-white/10 px-6 py-4 flex items-center justify-between z-20">
+        <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center shadow-lg shadow-indigo-500/30">
+                <i class="fa-solid fa-dharmachakra text-white text-xl animate-spin" style="animation-duration: 25s;"></i>
+            </div>
+            <div>
+                <h1 id="i18n-title" class="text-xl font-black bg-gradient-to-r from-indigo-400 via-purple-300 to-pink-400 bg-clip-text text-transparent tracking-tight">QUANTUM WHEEL</h1>
+                <p id="i18n-subtitle" class="text-[11px] text-slate-400 font-medium">Equal Visual Sector Distribution Engine</p>
+            </div>
+        </div>
+        <div class="flex items-center space-x-2.5">
+            <button id="langToggleBtn" onclick="toggleLanguage()" class="px-3 py-2 bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-300 rounded-xl text-xs font-bold transition flex items-center space-x-1.5 border border-indigo-500/30">
+                <i class="fa-solid fa-globe text-indigo-400"></i>
+                <span id="langLabel">繁體中文</span>
+            </button>
+            <button id="soundToggleBtn" onclick="toggleAudio()" class="px-3 py-2 bg-white/5 hover:bg-white/10 text-slate-300 rounded-xl text-xs font-semibold transition flex items-center space-x-2 border border-white/10">
+                <i id="soundIcon" class="fa-solid fa-volume-high text-indigo-400"></i>
+                <span id="soundLabel" class="hidden sm:inline">Sound ON</span>
+            </button>
+            <button onclick="openModal('historyModal')" class="px-3.5 py-2 bg-white/5 hover:bg-white/10 text-slate-300 rounded-xl text-xs font-semibold transition flex items-center space-x-2 border border-white/10">
+                <i class="fa-solid fa-clock-rotate-left text-purple-400"></i>
+                <span id="i18n-spinLog" class="hidden sm:inline">Spin Log</span>
+            </button>
+            <button onclick="resetToDefault()" class="px-3.5 py-2 bg-white/5 hover:bg-white/10 text-slate-300 rounded-xl text-xs font-semibold transition flex items-center space-x-2 border border-white/10">
+                <i class="fa-solid fa-rotate-right text-amber-400"></i>
+                <span id="i18n-reset" class="hidden sm:inline">Reset</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center z-10">
+        <section class="lg:col-span-7 flex flex-col items-center justify-center glass-panel rounded-3xl p-6 relative min-h-[520px]">
+            <div class="relative w-full max-w-[440px] aspect-square flex items-center justify-center my-2">
+                <div class="absolute -top-4 left-1/2 -translate-x-1/2 z-30 w-10 h-14 flex flex-col items-center filter drop-shadow-[0_0_15px_rgba(245,158,11,0.6)]">
+                    <div class="w-8 h-8 bg-gradient-to-b from-amber-300 via-amber-500 to-amber-700 rotate-45 transform origin-center rounded-sm border-2 border-amber-100 flex items-center justify-center shadow-lg"></div>
                 </div>
-                <div>
-                    <div class="text-xs font-mono text-yellow-400 tracking-widest font-bold">BONOXS MOBILE</div>
-                    <h1 class="text-lg font-black text-white tracking-wide">ROBUX MATRIX</h1>
+                <div class="w-full h-full relative wheel-glow">
+                    <canvas id="wheelCanvas" class="w-full h-full rounded-full cursor-pointer" width="800" height="800"></canvas>
+                    <button id="spinBtn" onclick="startSpin()" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 bg-gradient-to-tr from-indigo-600 via-purple-600 to-pink-600 hover:from-indigo-500 hover:to-pink-500 text-white font-black rounded-full shadow-[0_0_50px_rgba(99,102,241,0.7)] border-4 border-slate-950 flex flex-col items-center justify-center transition-all transform hover:scale-105 active:scale-95 group z-20">
+                        <i class="fa-solid fa-play text-2xl group-hover:translate-x-0.5 transition"></i>
+                        <span id="i18n-spin" class="text-[10px] tracking-widest uppercase font-extrabold mt-0.5">SPIN</span>
+                    </button>
                 </div>
             </div>
-            <div class="flex items-center gap-2">
-                <button onclick="triggerSync()" class="w-9 h-9 rounded-xl glass-panel flex items-center justify-center text-yellow-400 active:rotate-180 transition-transform duration-500">
-                    <i class="fa-solid fa-rotate text-sm" id="sync-icon"></i>
+
+            <div class="mt-4 flex items-center justify-center w-full">
+                <div id="statusText" class="text-xs sm:text-sm font-semibold text-slate-200 bg-white/5 px-6 py-3 rounded-2xl border border-white/10 shadow-inner text-center w-full max-w-md">
+                    Click SPIN to start quantum calculation.
+                </div>
+            </div>
+        </section>
+
+        <section class="lg:col-span-5 glass-panel rounded-3xl p-6 flex flex-col h-[540px]">
+            <div class="flex items-center justify-between pb-4 border-b border-white/10">
+                <div class="flex items-center space-x-2.5">
+                    <i class="fa-solid fa-sliders text-indigo-400"></i>
+                    <h2 id="i18n-itemManager" class="text-base font-bold text-slate-100">Item Manager</h2>
+                </div>
+                <button onclick="openAddPrizeModal()" class="px-3.5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-semibold transition flex items-center space-x-2 shadow-lg shadow-indigo-600/30">
+                    <i class="fa-solid fa-plus text-xs"></i>
+                    <span id="i18n-addItem">Add Item</span>
                 </button>
-                <div class="w-9 h-9 rounded-xl glass-panel flex items-center justify-center text-cyan-400 border border-cyan-500/30">
-                    <i class="fa-solid fa-shield-halved text-sm"></i>
-                </div>
-            </div>
-        </header>
-
-        <!-- Main Content Scrollable Area -->
-        <main class="flex-grow p-4 pb-24 flex flex-col gap-5 overflow-y-auto">
-            
-            <!-- Live Status & Markup Indicator Card -->
-            <div class="glass-panel p-4 rounded-2xl relative overflow-hidden">
-                <div class="absolute -right-6 -bottom-6 w-24 h-24 bg-yellow-500/10 rounded-full blur-xl pointer-events-none"></div>
-                <div class="flex justify-between items-center mb-3">
-                    <div class="flex items-center gap-2">
-                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
-                        <span class="text-[11px] font-mono text-slate-300 tracking-wider">AUTO +20 BS MARKUP ACTIVE</span>
-                    </div>
-                    <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-yellow-500/20 text-yellow-300 font-bold border border-yellow-500/40">V2.6 LIVE</span>
-                </div>
-
-                <div class="grid grid-cols-2 gap-3 pt-2 border-t border-yellow-500/15">
-                    <div>
-                        <label class="block text-[10px] font-mono text-slate-400 mb-1">BASE RATE (BS / 1000R$)</label>
-                        <div class="relative">
-                            <input type="number" id="base-rate-input" value="647.00" step="1" class="w-full bg-black/60 border border-yellow-500/30 rounded-xl px-3 py-2 text-sm font-mono font-bold text-yellow-400 focus:outline-none focus:border-yellow-400" oninput="updatePricingMatrix()">
-                        </div>
-                    </div>
-                    <div>
-                        <label class="block text-[10px] font-mono text-slate-400 mb-1">AUTO ADDED MARKUP</label>
-                        <div class="bg-black/60 border border-pink-500/30 rounded-xl px-3 py-2 text-sm font-mono font-bold text-pink-400 flex items-center justify-between">
-                            <span>+20.00</span>
-                            <span class="text-[10px] text-slate-400">Bs.</span>
-                        </div>
-                    </div>
-                </div>
             </div>
 
-            <!-- Search Filter Bar -->
-            <div class="relative">
-                <input type="text" id="search-input" placeholder="Search Robux amount (e.g. 800)..." class="w-full bg-black/50 border border-yellow-500/25 rounded-xl px-4 py-3 pl-10 text-xs font-mono text-white placeholder-slate-500 focus:outline-none focus:border-yellow-400 transition-all" oninput="filterPackages()">
-                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-500 text-xs"></i>
-            </div>
+            <div id="prizeListContainer" class="flex-1 overflow-y-auto my-4 space-y-3 pr-1"></div>
 
-            <!-- Robux Packages Grid List -->
-            <div id="packages-list" class="flex flex-col gap-3.5">
-                <!-- Populated dynamically via JavaScript -->
+            <div class="pt-3.5 border-t border-white/10 flex justify-between items-center text-xs text-slate-400 font-medium">
+                <span><span id="i18n-itemCount">Items Count:</span> <strong id="totalPrizeCount" class="text-indigo-400">0</strong></span>
+                <span class="flex items-center space-x-1">
+                    <i class="fa-solid fa-chart-pie text-emerald-400"></i>
+                    <span><span id="i18n-visualAngles">Visual Angles:</span> <strong id="i18n-strictlyEqual" class="text-emerald-400">Strictly Equal</strong></span>
+                </span>
             </div>
+        </section>
+    </main>
 
-        </main>
-
-        <!-- Bottom Navigation Bar (Bonoxs Mobile Style) -->
-        <footer class="sticky bottom-0 z-40 glass-panel border-t border-yellow-500/20 px-6 py-3 flex items-center justify-between text-xs font-mono">
-            <div class="flex items-center gap-2 text-yellow-400">
-                <i class="fa-solid fa-wallet"></i>
-                <span id="total-tiers-count" class="font-bold">8 Packages</span>
-            </div>
-            <div class="text-[11px] text-slate-400 flex items-center gap-1.5">
-                <i class="fa-solid fa-circle-check text-emerald-400"></i>
-                <span>Instant Copy Ready</span>
-            </div>
-        </footer>
-
+    <div class="fixed bottom-4 left-4 z-40">
+        <button id="secretTriggerBtn" onclick="openSecretModal()" class="w-8 h-8 rounded-full bg-slate-900/60 hover:bg-slate-800 border border-white/10 text-slate-500 hover:text-indigo-400 flex items-center justify-center transition shadow-xl group" title="System Status">
+            <i class="fa-solid fa-shield-halved text-xs group-hover:rotate-12 transition"></i>
+        </button>
     </div>
 
-    <!-- Toast Notification Container -->
-    <div id="toast-container" class="fixed top-5 left-1/2 transform -translate-x-1/2 z-50 flex flex-col gap-2 pointer-events-none w-11/12 max-w-sm"></div>
+    <div id="passwordModal" class="fixed inset-0 bg-black/80 backdrop-blur-xl z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+        <div class="glass-panel w-full max-w-sm rounded-3xl p-6 shadow-2xl transform scale-95 transition-transform duration-300">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-sm font-bold text-slate-200 flex items-center space-x-2">
+                    <i class="fa-solid fa-lock text-indigo-400"></i>
+                    <span id="i18n-sysCredentials">System Credentials</span>
+                </h3>
+                <button onclick="closeModal('passwordModal')" class="text-slate-400 hover:text-slate-200"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <p id="i18n-sysCredsPrompt" class="text-xs text-slate-400 mb-4">Enter administrator password to access override control panel:</p>
+            <form onsubmit="verifyPassword(event)" class="space-y-4">
+                <div>
+                    <input type="password" id="adminPasswordInput" placeholder="Password (hint: admin)" class="w-full bg-slate-950/80 border border-white/10 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none focus:border-indigo-500 transition">
+                </div>
+                <div id="passwordErrorMsg" class="text-red-400 text-xs hidden font-medium">Authentication failed. Incorrect password.</div>
+                <div class="flex justify-end space-x-2 pt-2">
+                    <button type="button" onclick="closeModal('passwordModal')" class="px-4 py-2 bg-white/5 hover:bg-white/10 text-slate-300 rounded-xl text-xs font-semibold transition" id="i18n-cancel1">Cancel</button>
+                    <button type="submit" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-semibold transition shadow-lg shadow-indigo-600/30" id="i18n-authenticate">Authenticate</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="adminModal" class="fixed inset-0 bg-black/85 backdrop-blur-xl z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+        <div class="glass-panel border-indigo-500/30 w-full max-w-lg rounded-3xl p-6 shadow-2xl transform scale-95 transition-transform duration-300 max-h-[90vh] flex flex-col">
+            <div class="flex justify-between items-center pb-4 border-b border-white/10">
+                <div class="flex items-center space-x-3">
+                    <div class="w-9 h-9 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center border border-indigo-500/30">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </div>
+                    <div>
+                        <h3 id="i18n-adminTitle" class="text-sm font-bold text-slate-100">Quantum Override Console</h3>
+                        <p id="i18n-adminSub" class="text-[11px] text-indigo-400 font-medium">Natural Physics Rigging Active</p>
+                    </div>
+                </div>
+                <button onclick="closeModal('adminModal')" class="text-slate-400 hover:text-slate-200"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+
+            <div class="my-4 space-y-4 overflow-y-auto flex-1 pr-1">
+                <div class="bg-slate-950/70 border border-white/10 rounded-2xl p-4 space-y-3">
+                    <label class="block text-xs font-bold text-slate-200 flex items-center space-x-2">
+                        <i class="fa-solid fa-bullseye text-pink-400"></i>
+                        <span id="i18n-forcedWinnerLabel">100% Guaranteed Forced Winner:</span>
+                    </label>
+                    <select id="forceWinSelect" class="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-2.5 text-xs text-slate-200 focus:outline-none focus:border-indigo-500 transition">
+                        <option value="">-- No Forced Guarantee (Use Probability) --</option>
+                    </select>
+                    <p id="i18n-forcedDesc" class="text-[11px] text-slate-400 leading-relaxed">Selecting an item forces the wheel to slow down with natural realistic deceleration and land cleanly on this exact item.</p>
+                </div>
+
+                <div class="bg-slate-950/70 border border-white/10 rounded-2xl p-4 space-y-3">
+                    <label class="block text-xs font-bold text-slate-200 flex items-center space-x-2">
+                        <i class="fa-solid fa-scale-balanced text-amber-400"></i>
+                        <span id="i18n-weightsLabel">Custom Probability Weights (Visual Sizes Remain Equal):</span>
+                    </label>
+                    <div id="adminWeightsContainer" class="space-y-2.5 max-h-48 overflow-y-auto pr-1"></div>
+                </div>
+
+                <div class="bg-slate-950/70 border border-white/10 rounded-2xl p-4 flex items-center justify-between">
+                    <div>
+                        <h4 id="i18n-stealthLabel" class="text-xs font-bold text-slate-200">Stealth Mode Indicator</h4>
+                        <p id="i18n-stealthDesc" class="text-[10px] text-slate-400">Keep admin session completely subtle without UI indicators</p>
+                    </div>
+                    <input type="checkbox" id="stealthToggle" onchange="toggleStealthMode(this.checked)" class="w-4 h-4 accent-indigo-500 rounded cursor-pointer">
+                </div>
+            </div>
+
+            <div class="pt-4 border-t border-white/10 flex justify-between items-center">
+                <button onclick="lockAdminMode()" class="px-3.5 py-2 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 rounded-xl text-xs font-semibold transition flex items-center space-x-1.5">
+                    <i class="fa-solid fa-lock"></i>
+                    <span id="i18n-lockAdmin">Lock Admin</span>
+                </button>
+                <button onclick="closeModal('adminModal')" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-semibold transition shadow-lg shadow-indigo-600/30" id="i18n-saveSettings">Save Settings</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="prizeModal" class="fixed inset-0 bg-black/80 backdrop-blur-xl z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+        <div class="glass-panel w-full max-w-md rounded-3xl p-6 shadow-2xl transform scale-95 transition-transform duration-300">
+            <div class="flex justify-between items-center mb-4">
+                <h3 id="prizeModalTitle" class="text-sm font-bold text-slate-200">Configure Item</h3>
+                <button onclick="closeModal('prizeModal')" class="text-slate-400 hover:text-slate-200"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <form id="prizeForm" onsubmit="savePrize(event)" class="space-y-4">
+                <input type="hidden" id="prizeEditIndex" value="-1">
+                <div>
+                    <label id="i18n-itemTitleLabel" class="block text-xs font-medium text-slate-400 mb-1">Item Title</label>
+                    <input type="text" id="prizeNameInput" required placeholder="e.g. Cyber Deck Pro" class="w-full bg-slate-950/80 border border-white/10 rounded-xl px-4 py-2.5 text-xs text-slate-200 focus:outline-none focus:border-indigo-500 transition">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label id="i18n-iconLabel" class="block text-xs font-medium text-slate-400 mb-1">Icon / Emoji</label>
+                        <input type="text" id="prizeIconInput" maxlength="4" placeholder="e.g. 💻" class="w-full bg-slate-950/80 border border-white/10 rounded-xl px-4 py-2.5 text-xs text-slate-200 focus:outline-none focus:border-indigo-500 transition">
+                    </div>
+                    <div>
+                        <label id="i18n-colorLabel" class="block text-xs font-medium text-slate-400 mb-1">Sector Color</label>
+                        <input type="color" id="prizeColorInput" value="#6366f1" class="w-full h-9 bg-slate-950 border border-white/10 rounded-xl cursor-pointer p-0.5">
+                    </div>
+                </div>
+                <div class="flex justify-end space-x-2 pt-2">
+                    <button type="button" onclick="closeModal('prizeModal')" class="px-4 py-2 bg-white/5 hover:bg-white/10 text-slate-300 rounded-xl text-xs font-semibold transition" id="i18n-cancel2">Cancel</button>
+                    <button type="submit" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-semibold transition shadow-lg shadow-indigo-600/30" id="i18n-saveItem">Save Item</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="winModal" class="fixed inset-0 bg-black/90 backdrop-blur-2xl z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+        <div class="glass-panel border-amber-500/30 w-full max-w-sm rounded-3xl p-8 text-center shadow-2xl transform scale-95 transition-transform duration-300 relative overflow-hidden">
+            <div class="w-20 h-20 bg-gradient-to-tr from-amber-400 to-amber-600 rounded-3xl mx-auto flex items-center justify-center shadow-xl shadow-amber-500/30 mb-4 animate-bounce">
+                <span id="winPrizeIcon" class="text-3xl">🏆</span>
+            </div>
+            <span id="i18n-victoryTitle" class="text-[10px] font-black text-amber-400 tracking-widest uppercase">Quantum Victory Winner</span>
+            <h3 id="winPrizeTitle" class="text-2xl font-black text-slate-100 my-2">--</h3>
+            <p id="i18n-victoryDesc" class="text-xs text-slate-400 mb-6 leading-relaxed">The quantum alignment has selected your prize outcome.</p>
+            <button onclick="closeModal('winModal')" class="w-full py-3 bg-gradient-to-r from-indigo-600 to-pink-600 hover:from-indigo-500 hover:to-pink-500 text-white font-bold rounded-xl shadow-lg shadow-indigo-600/30 transition text-xs" id="i18n-claimReward">
+                Claim Reward & Continue
+            </button>
+        </div>
+    </div>
+
+    <div id="historyModal" class="fixed inset-0 bg-black/80 backdrop-blur-xl z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+        <div class="glass-panel w-full max-w-md rounded-3xl p-6 shadow-2xl transform scale-95 transition-transform duration-300 max-h-[85vh] flex flex-col">
+            <div class="flex justify-between items-center pb-3 border-b border-white/10">
+                <h3 class="text-sm font-bold text-slate-200 flex items-center space-x-2">
+                    <i class="fa-solid fa-clock-rotate-left text-purple-400"></i>
+                    <span id="i18n-historyTitle">Spin History Log</span>
+                </h3>
+                <button onclick="closeModal('historyModal')" class="text-slate-400 hover:text-slate-200"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div id="historyListContainer" class="flex-1 overflow-y-auto my-3 space-y-2 pr-1"></div>
+            <div class="pt-3 border-t border-white/10 flex justify-between items-center">
+                <button onclick="clearHistory()" class="px-3 py-1.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 rounded-xl text-xs font-semibold transition" id="i18n-clearLog">Clear Log</button>
+                <button onclick="closeModal('historyModal')" class="px-4 py-1.5 bg-white/5 hover:bg-white/10 text-slate-300 rounded-xl text-xs font-semibold transition" id="i18n-close">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="fixed top-5 right-5 z-50 glass-panel text-slate-200 px-5 py-3 rounded-2xl shadow-2xl transform translate-y-[-150%] transition-transform duration-300 flex items-center space-x-3 text-xs border-white/20">
+        <i class="fa-solid fa-circle-check text-emerald-400 text-sm"></i>
+        <span id="toastMsg" class="font-semibold">Notification</span>
+    </div>
 
     <script>
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        function playSound(type = 'click') {
-            if (!audioCtx) return;
-            if (audioCtx.state === 'suspended') { audioCtx.resume(); }
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            const now = audioCtx.currentTime;
-
-            if (type === 'click') {
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(700, now);
-                osc.frequency.exponentialRampToValueAtTime(300, now + 0.05);
-                gain.gain.setValueAtTime(0.1, now);
-                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.05);
-                osc.start(now);
-                osc.stop(now + 0.05);
-            } else if (type === 'success') {
-                osc.type = 'triangle';
-                osc.frequency.setValueAtTime(523.25, now);
-                osc.frequency.setValueAtTime(783.99, now + 0.08);
-                gain.gain.setValueAtTime(0.15, now);
-                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
-                osc.start(now);
-                osc.stop(now + 0.2);
+        const translations = {
+            en: {
+                title: "QUANTUM WHEEL",
+                subtitle: "Equal Visual Sector Distribution Engine",
+                soundOn: "Sound ON",
+                soundOff: "Sound OFF",
+                spinLog: "Spin Log",
+                reset: "Reset",
+                spin: "SPIN",
+                spinStatusReady: "Click SPIN to start quantum calculation.",
+                spinStatusSpinning: "Quantum wheel spinning... Calculating outcome.",
+                itemManager: "Item Manager",
+                addItem: "Add Item",
+                itemCount: "Items Count:",
+                visualAngles: "Visual Angles:",
+                strictlyEqual: "Strictly Equal",
+                editItem: "Configure Item",
+                addItemTitle: "Add Item",
+                editItemTitle: "Edit Item",
+                itemTitleLabel: "Item Title",
+                iconLabel: "Icon / Emoji",
+                colorLabel: "Sector Color",
+                cancel: "Cancel",
+                saveItem: "Save Item",
+                sysCredentials: "System Credentials",
+                sysCredsPrompt: "Enter administrator password to access override control panel:",
+                passwordPlaceholder: "Password (hint: admin)",
+                authFailed: "Authentication failed. Incorrect password.",
+                authenticate: "Authenticate",
+                adminTitle: "Quantum Override Console",
+                adminSub: "Natural Physics Rigging Active",
+                forcedWinnerLabel: "100% Guaranteed Forced Winner:",
+                noForced: "-- No Forced Guarantee (Use Probability) --",
+                forcedDesc: "Selecting an item forces the wheel to slow down with natural realistic deceleration and land cleanly on this exact item.",
+                weightsLabel: "Custom Probability Weights (Visual Sizes Remain Equal):",
+                stealthLabel: "Stealth Mode Indicator",
+                stealthDesc: "Keep admin session completely subtle without UI indicators",
+                lockAdmin: "Lock Admin",
+                saveSettings: "Save Settings",
+                victoryTitle: "Quantum Victory Winner",
+                victoryDesc: "The quantum alignment has selected your prize outcome.",
+                claimReward: "Claim Reward & Continue",
+                historyTitle: "Spin History Log",
+                noRecords: "No spin records logged.",
+                clearLog: "Clear Log",
+                close: "Close",
+                resetToast: "Reset to default configuration!",
+                addToast: "Item added successfully!",
+                updateToast: "Item updated successfully!",
+                minItemsToast: "At least 2 items are required for wheel.",
+                removeToast: "Item removed.",
+                overrideToast: "100% win override applied.",
+                clearedOverrideToast: "Forced override cleared.",
+                logClearedToast: "Spin log cleared.",
+                unlockedToast: "Admin override console unlocked.",
+                lockedToast: "Admin session locked."
+            },
+            zh: {
+                title: "量子幸運轉盤",
+                subtitle: "等角視覺區塊分配引擎",
+                soundOn: "音效 開",
+                soundOff: "音效 關",
+                spinLog: "抽獎記錄",
+                reset: "重設",
+                spin: "開始抽獎",
+                spinStatusReady: "點擊「開始抽獎」進行量子計算。",
+                spinStatusSpinning: "轉盤旋轉中... 正在計算結果。",
+                itemManager: "獎品管理",
+                addItem: "新增獎品",
+                itemCount: "獎品總數：",
+                visualAngles: "視覺角度：",
+                strictlyEqual: "嚴格等角",
+                editItem: "設定獎品",
+                addItemTitle: "新增獎品",
+                editItemTitle: "編輯獎品",
+                itemTitleLabel: "獎品名稱",
+                iconLabel: "圖示 / 表情",
+                colorLabel: "區塊顏色",
+                cancel: "取消",
+                saveItem: "儲存獎品",
+                sysCredentials: "系統憑證驗證",
+                sysCredsPrompt: "請輸入管理員密碼以存取後台控制面板：",
+                passwordPlaceholder: "密碼 (提示: admin)",
+                authFailed: "驗證失敗，密碼不正確。",
+                authenticate: "驗證登入",
+                adminTitle: "量子控制後台",
+                adminSub: "自然物理竄改模式已啟用",
+                forcedWinnerLabel: "100% 指定必定中獎項目：",
+                noForced: "-- 不指定 (依機率隨機) --",
+                forcedDesc: "選擇項目後，轉盤將以極其自然的減速物理規律準確停在該項目上。",
+                weightsLabel: "自訂抽中機率權重 (視覺轉盤大小保持完全一致)：",
+                stealthLabel: "隱形後台模式",
+                stealthDesc: "隱藏介面提示，保持完全自然無痕狀態",
+                lockAdmin: "鎖定後台",
+                saveSettings: "儲存設定",
+                victoryTitle: "恭喜獲得獎品",
+                victoryDesc: "量子對齊計算已完成，恭喜獲得此獎項！",
+                claimReward: "領取獎勵並繼續",
+                historyTitle: "歷史抽獎紀錄",
+                noRecords: "尚無抽獎紀錄。",
+                clearLog: "清除紀錄",
+                close: "關閉",
+                resetToast: "已重設為預設配置！",
+                addToast: "成功新增獎品！",
+                updateToast: "成功更新獎品！",
+                minItemsToast: "轉盤至少需要 2 個項目。",
+                removeToast: "已移除項目。",
+                overrideToast: "已設定 100% 必中指定項目。",
+                clearedOverrideToast: "已清除指定必中設定。",
+                logClearedToast: "已清除抽獎紀錄。",
+                unlockedToast: "已解鎖管理員後台控制 Console。",
+                lockedToast: "管理員後台已鎖定。"
             }
+        };
+
+        let currentLang = localStorage.getItem('quantum_wheel_lang') || 'en';
+
+        function t(key) {
+            return translations[currentLang][key] || key;
         }
 
-        const canvas = document.getElementById('bg-canvas');
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'zh' : 'en';
+            localStorage.setItem('quantum_wheel_lang', currentLang);
+            updateUIStrings();
+        }
+
+        function updateUIStrings() {
+            document.getElementById('langLabel').innerText = currentLang === 'en' ? '繁體中文' : 'English';
+            document.getElementById('i18n-title').innerText = t('title');
+            document.getElementById('i18n-subtitle').innerText = t('subtitle');
+            document.getElementById('soundLabel').innerText = audioMuted ? t('soundOff') : t('soundOn');
+            document.getElementById('i18n-spinLog').innerText = t('spinLog');
+            document.getElementById('i18n-reset').innerText = t('reset');
+            document.getElementById('i18n-spin').innerText = t('spin');
+            if (!isSpinning) {
+                document.getElementById('statusText').innerText = t('spinStatusReady');
+            }
+            document.getElementById('i18n-itemManager').innerText = t('itemManager');
+            document.getElementById('i18n-addItem').innerText = t('addItem');
+            document.getElementById('i18n-itemCount').innerText = t('itemCount');
+            document.getElementById('i18n-visualAngles').innerText = t('visualAngles');
+            document.getElementById('i18n-strictlyEqual').innerText = t('strictlyEqual');
+            
+            document.getElementById('i18n-sysCredentials').innerText = t('sysCredentials');
+            document.getElementById('i18n-sysCredsPrompt').innerText = t('sysCredsPrompt');
+            document.getElementById('adminPasswordInput').placeholder = t('passwordPlaceholder');
+            document.getElementById('passwordErrorMsg').innerText = t('authFailed');
+            document.getElementById('i18n-cancel1').innerText = t('cancel');
+            document.getElementById('i18n-cancel2').innerText = t('cancel');
+            document.getElementById('i18n-authenticate').innerText = t('authenticate');
+            
+            document.getElementById('i18n-adminTitle').innerText = t('adminTitle');
+            document.getElementById('i18n-adminSub').innerText = t('adminSub');
+            document.getElementById('i18n-forcedWinnerLabel').innerText = t('forcedWinnerLabel');
+            document.getElementById('i18n-forcedDesc').innerText = t('forcedDesc');
+            document.getElementById('i18n-weightsLabel').innerText = t('weightsLabel');
+            document.getElementById('i18n-stealthLabel').innerText = t('stealthLabel');
+            document.getElementById('i18n-stealthDesc').innerText = t('stealthDesc');
+            document.getElementById('i18n-lockAdmin').innerText = t('lockAdmin');
+            document.getElementById('i18n-saveSettings').innerText = t('saveSettings');
+
+            document.getElementById('i18n-itemTitleLabel').innerText = t('itemTitleLabel');
+            document.getElementById('i18n-iconLabel').innerText = t('iconLabel');
+            document.getElementById('i18n-colorLabel').innerText = t('colorLabel');
+            document.getElementById('i18n-saveItem').innerText = t('saveItem');
+
+            document.getElementById('i18n-victoryTitle').innerText = t('victoryTitle');
+            document.getElementById('i18n-victoryDesc').innerText = t('victoryDesc');
+            document.getElementById('i18n-claimReward').innerText = t('claimReward');
+
+            document.getElementById('i18n-historyTitle').innerText = t('historyTitle');
+            document.getElementById('i18n-clearLog').innerText = t('clearLog');
+            document.getElementById('i18n-close').innerText = t('close');
+
+            renderPrizeList();
+            renderHistoryList();
+            updateAdminSelects();
+        }
+
+        const defaultPrizes = [
+            { id: 1, name: "Cyber Deck Pro", color: "#6366f1", icon: "💻", weight: 10 },
+            { id: 2, name: "Neon Headphones", color: "#ec4899", icon: "🎧", weight: 10 },
+            { id: 3, name: "Plasma Voucher", color: "#8b5cf6", icon: "🎟️", weight: 10 },
+            { id: 4, name: "Cyberpunk Hoodie", color: "#14b8a6", icon: "🧥", weight: 10 },
+            { id: 5, name: "Energy Crystal", color: "#f59e0b", icon: "💎", weight: 10 },
+            { id: 6, name: "Mystery Relic", color: "#3b82f6", icon: "🔮", weight: 10 }
+        ];
+
+        let prizes = JSON.parse(localStorage.getItem('quantum_wheel_prizes_v3')) || defaultPrizes;
+        let history = JSON.parse(localStorage.getItem('quantum_wheel_history_v3')) || [];
+        
+        let currentRotation = 0;
+        let isSpinning = false;
+        let isAdminLoggedIn = false;
+        let forcedNextPrizeId = "";
+        let audioMuted = false;
+
+        const canvas = document.getElementById('wheelCanvas');
         const ctx = canvas.getContext('2d');
-        let particles = [];
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
 
-        for (let i = 0; i < 35; i++) {
-            particles.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
+        const particleCanvas = document.getElementById('particleCanvas');
+        const pCtx = particleCanvas.getContext('2d');
+        let particles = [];
+        let backgroundOrbs = [];
+
+        function resizeParticleCanvas() {
+            particleCanvas.width = window.innerWidth;
+            particleCanvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeParticleCanvas);
+        resizeParticleCanvas();
+
+        for (let i = 0; i < 30; i++) {
+            backgroundOrbs.push({
+                x: Math.random() * window.innerWidth,
+                y: Math.random() * window.innerHeight,
+                radius: Math.random() * 2 + 1,
                 vx: (Math.random() - 0.5) * 0.4,
                 vy: (Math.random() - 0.5) * 0.4,
-                radius: Math.random() * 1.5 + 0.8,
-                color: Math.random() > 0.4 ? '#facc15' : '#00f3ff'
+                alpha: Math.random() * 0.5 + 0.2
             });
         }
 
-        function animateCanvas() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.lineWidth = 0.4;
-            for (let i = 0; i < particles.length; i++) {
-                let p = particles[i];
-                p.x += p.vx;
-                p.y += p.vy;
-                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+        class Particle {
+            constructor(x, y, color) {
+                this.x = x;
+                this.y = y;
+                this.color = color;
+                this.size = Math.random() * 5 + 2;
+                const angle = Math.random() * Math.PI * 2;
+                const speed = Math.random() * 9 + 3;
+                this.vx = Math.cos(angle) * speed;
+                this.vy = Math.sin(angle) * speed;
+                this.alpha = 1;
+                this.decay = Math.random() * 0.02 + 0.012;
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.vy += 0.15;
+                this.alpha -= this.decay;
+            }
+            draw() {
+                pCtx.save();
+                pCtx.globalAlpha = Math.max(0, this.alpha);
+                pCtx.fillStyle = this.color;
+                pCtx.beginPath();
+                pCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                pCtx.fill();
+                pCtx.restore();
+            }
+        }
+
+        function triggerConfetti() {
+            const rect = canvas.getBoundingClientRect();
+            const cx = rect.left + rect.width / 2;
+            const cy = rect.top + rect.height / 2;
+            for (let i = 0; i < 140; i++) {
+                const colors = ['#6366f1', '#ec4899', '#f59e0b', '#14b8a6', '#3b82f6', '#8b5cf6'];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                particles.push(new Particle(cx, cy, color));
+            }
+        }
+
+        function particleLoop() {
+            pCtx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
+            
+            backgroundOrbs.forEach(orb => {
+                orb.x += orb.vx;
+                orb.y += orb.vy;
+                if (orb.x < 0 || orb.x > particleCanvas.width) orb.vx *= -1;
+                if (orb.y < 0 || orb.y > particleCanvas.height) orb.vy *= -1;
+                pCtx.save();
+                pCtx.globalAlpha = orb.alpha;
+                pCtx.fillStyle = '#6366f1';
+                pCtx.beginPath();
+                pCtx.arc(orb.x, orb.y, orb.radius, 0, Math.PI * 2);
+                pCtx.fill();
+                pCtx.restore();
+            });
+
+            particles.forEach((p, index) => {
+                p.update();
+                p.draw();
+                if (p.alpha <= 0) {
+                    particles.splice(index, 1);
+                }
+            });
+            requestAnimationFrame(particleLoop);
+        }
+        particleLoop();
+
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        
+        function toggleAudio() {
+            audioMuted = !audioMuted;
+            document.getElementById('soundIcon').className = audioMuted ? "fa-solid fa-volume-xmark text-slate-500" : "fa-solid fa-volume-high text-indigo-400";
+            document.getElementById('soundLabel').innerText = audioMuted ? t('soundOff') : t('soundOn');
+        }
+
+        function playTickSound(velocityRatio = 1) {
+            if (audioMuted) return;
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'triangle';
+            const baseFreq = 600 + velocityRatio * 400;
+            osc.frequency.setValueAtTime(baseFreq, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(200, audioCtx.currentTime + 0.03);
+            gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+            gain.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + 0.03);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.03);
+        }
+
+        function playWinSound() {
+            if (audioMuted) return;
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            const now = audioCtx.currentTime;
+            const notes = [523.25, 659.25, 783.99, 1046.50, 1318.51, 1567.98];
+            notes.forEach((freq, idx) => {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, now + idx * 0.07);
+                gain.gain.setValueAtTime(0.12, now + idx * 0.07);
+                gain.gain.linearRampToValueAtTime(0.001, now + idx * 0.07 + 0.3);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(now + idx * 0.07);
+                osc.stop(now + idx * 0.07 + 0.3);
+            });
+        }
+
+        function drawWheel() {
+            const width = canvas.width;
+            const height = canvas.height;
+            const centerX = width / 2;
+            const centerY = height / 2;
+            const radius = Math.min(centerX, centerY) - 25;
+
+            ctx.clearRect(0, 0, width, height);
+
+            if (prizes.length === 0) {
+                ctx.fillStyle = '#94a3b8';
+                ctx.font = 'bold 20px "Inter", sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('Please add items', centerX, centerY);
+                return;
+            }
+
+            const sliceAngle = (2 * Math.PI) / prizes.length;
+            let startAngle = (currentRotation * Math.PI) / 180;
+
+            prizes.forEach((prize) => {
+                const endAngle = startAngle + sliceAngle;
+
                 ctx.beginPath();
-                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                ctx.fillStyle = p.color;
-                ctx.shadowBlur = 8;
-                ctx.shadowColor = p.color;
+                ctx.moveTo(centerX, centerY);
+                ctx.arc(centerX, centerY, radius, startAngle, endAngle);
+                ctx.closePath();
+                ctx.fillStyle = prize.color;
                 ctx.fill();
 
-                for (let j = i + 1; j < particles.length; j++) {
-                    let p2 = particles[j];
-                    let dist = Math.hypot(p.x - p2.x, p.y - p2.y);
-                    if (dist < 100) {
-                        ctx.strokeStyle = `rgba(250, 204, 21, ${0.12 * (1 - dist / 100)})`;
-                        ctx.beginPath();
-                        ctx.moveTo(p.x, p.y);
-                        ctx.lineTo(p2.x, p2.y);
-                        ctx.stroke();
-                    }
-                }
-            }
-            requestAnimationFrame(animateCanvas);
+                ctx.lineWidth = 4;
+                ctx.strokeStyle = '#020617';
+                ctx.stroke();
+
+                ctx.save();
+                ctx.translate(centerX, centerY);
+                ctx.rotate(startAngle + sliceAngle / 2);
+                ctx.textAlign = 'right';
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 22px "Inter", sans-serif';
+                ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
+                ctx.shadowBlur = 8;
+                
+                let displayName = (prize.icon ? prize.icon + " " : "") + prize.name;
+                if (displayName.length > 14) displayName = displayName.substring(0, 13) + '..';
+                
+                ctx.fillText(displayName, radius - 45, 8);
+                ctx.restore();
+
+                startAngle = endAngle;
+            });
+
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+            ctx.lineWidth = 14;
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius - 7, 0, 2 * Math.PI);
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.25)';
+            ctx.stroke();
         }
-        animateCanvas();
 
-        const robuxPackages = [
-            { id: 1, robux: 400, badge: 'STARTER', icon: 'fa-gem' },
-            { id: 2, robux: 800, badge: 'POPULAR', icon: 'fa-fire' },
-            { id: 3, robux: 1700, badge: 'BEST VALUE', icon: 'fa-bolt' },
-            { id: 4, robux: 2700, badge: 'PRO TIER', icon: 'fa-shield-halved' },
-            { id: 5, robux: 3600, badge: 'ADVANCED', icon: 'fa-crown' },
-            { id: 6, robux: 4500, badge: 'ELITE GAMER', icon: 'fa-dragon' },
-            { id: 7, robux: 10000, badge: 'TYCOON', icon: 'fa-meteor' },
-            { id: 8, robux: 22500, badge: 'WHALE', icon: 'fa-infinity' }
-        ];
-
-        window.onload = function () {
-            updatePricingMatrix();
-        };
-
-        function updatePricingMatrix(filteredData = robuxPackages) {
-            const baseRateInput = parseFloat(document.getElementById('base-rate-input').value) || 647.00;
-            const markupFee = 20.00;
-            const container = document.getElementById('packages-list');
+        function renderPrizeList() {
+            const container = document.getElementById('prizeListContainer');
             container.innerHTML = '';
-
-            filteredData.forEach(pkg => {
-                const supplierCost = baseRateInput * (pkg.robux / 1000);
-                const finalRetailPrice = supplierCost + markupFee;
-                const unitRate = (finalRetailPrice / pkg.robux).toFixed(4);
-
-                const card = document.createElement('div');
-                card.className = 'glass-panel p-4 rounded-2xl flex flex-col gap-3 relative overflow-hidden group active:scale-[0.99] transition-transform';
-                card.innerHTML = `
-                    <div class="absolute -right-6 -top-6 w-20 h-20 bg-yellow-500/10 rounded-full blur-xl group-hover:bg-yellow-500/25 transition-all pointer-events-none"></div>
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-2.5">
-                            <div class="w-9 h-9 rounded-xl bg-yellow-500/15 border border-yellow-500/30 flex items-center justify-center text-yellow-400">
-                                <i class="fa-solid ${pkg.icon} text-sm"></i>
-                            </div>
-                            <div>
-                                <span class="text-xs font-mono px-2 py-0.5 rounded bg-yellow-500/20 text-yellow-300 font-bold border border-yellow-500/30">${pkg.badge}</span>
-                                <h3 class="text-lg font-black font-mono text-white tracking-tight mt-0.5">${pkg.robux.toLocaleString()} <span class="text-xs font-sans text-yellow-400 font-normal">ROBUX</span></h3>
-                            </div>
-                        </div>
-                        <div class="text-right">
-                            <span class="text-[10px] font-mono text-slate-400 block">UNIT RATE</span>
-                            <span class="text-xs font-mono text-cyan-400 font-bold">${unitRate} Bs</span>
+            
+            prizes.forEach((prize, index) => {
+                const item = document.createElement('div');
+                item.className = 'flex items-center justify-between p-3 bg-slate-950/60 border border-white/10 rounded-2xl hover:border-white/20 transition';
+                item.innerHTML = `
+                    <div class="flex items-center space-x-3">
+                        <div class="w-4 h-4 rounded-full shadow-md shrink-0" style="background-color: ${prize.color};"></div>
+                        <div class="overflow-hidden">
+                            <h4 class="text-xs font-bold text-slate-200 truncate">${escapeHtml(prize.icon || '')} ${escapeHtml(prize.name)}</h4>
+                            <span class="text-[10px] text-slate-400 font-medium">${(360/prizes.length).toFixed(1)}° (${t('strictlyEqual')})</span>
                         </div>
                     </div>
-
-                    <div class="grid grid-cols-2 gap-2 bg-black/40 p-2.5 rounded-xl border border-yellow-500/10 font-mono text-[11px]">
-                        <div class="flex flex-col">
-                            <span class="text-slate-400">Supplier Base</span>
-                            <span class="text-slate-200 font-bold">${supplierCost.toFixed(2)} Bs</span>
-                        </div>
-                        <div class="flex flex-col text-right">
-                            <span class="text-slate-400">Markup Added</span>
-                            <span class="text-pink-400 font-bold">+${markupFee.toFixed(2)} Bs</span>
-                        </div>
-                    </div>
-
-                    <div class="flex items-center justify-between pt-1">
-                        <div>
-                            <span class="text-[10px] font-mono text-slate-400 block">FINAL RETAIL PRICE</span>
-                            <span class="text-xl font-black font-mono text-yellow-400 tracking-tight">${finalRetailPrice.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} Bs</span>
-                        </div>
-                        <button onclick="copyPackageDetails(${finalRetailPrice}, ${pkg.robux})" class="bonoxs-yellow-btn px-4 py-2.5 rounded-xl text-xs flex items-center gap-2">
-                            <i class="fa-regular fa-copy"></i> Copy
+                    <div class="flex items-center space-x-1 shrink-0">
+                        <button onclick="openEditPrizeModal(${index})" class="p-1.5 text-slate-400 hover:text-indigo-400 transition rounded-lg hover:bg-white/5" title="Edit">
+                            <i class="fa-solid fa-pen text-xs"></i>
+                        </button>
+                        <button onclick="deletePrize(${index})" class="p-1.5 text-slate-400 hover:text-red-400 transition rounded-lg hover:bg-white/5" title="Delete">
+                            <i class="fa-solid fa-trash text-xs"></i>
                         </button>
                     </div>
                 `;
-                container.appendChild(card);
+                container.appendChild(item);
             });
 
-            document.getElementById('total-tiers-count').innerText = filteredData.length + ' Packages';
-        }
-
-        function filterPackages() {
-            playSound('click');
-            const query = document.getElementById('search-input').value.toLowerCase();
-            const filtered = robuxPackages.filter(p => p.robux.toString().includes(query) || p.badge.toLowerCase().includes(query));
-            updatePricingMatrix(filtered);
-        }
-
-        function triggerSync() {
-            playSound('click');
-            const icon = document.getElementById('sync-icon');
-            icon.classList.add('fa-spin');
-            showToast('Querying Bonoxs live mobile gateway rates...', 'info');
-
-            setTimeout(() => {
-                icon.classList.remove('fa-spin');
-                const randomShift = (Math.random() * 2 - 1).toFixed(2);
-                const currentRate = parseFloat(document.getElementById('base-rate-input').value);
-                const newRate = parseFloat((currentRate + parseFloat(randomShift)).toFixed(2));
-                document.getElementById('base-rate-input').value = newRate;
-                updatePricingMatrix();
-                playSound('success');
-                showToast('Successfully synchronized Bonoxs mobile rates!', 'success');
-            }, 900);
-        }
-
-        function copyPackageDetails(priceVal, robuxAmt) {
-            playSound('success');
-            const textToCopy = `${robuxAmt.toLocaleString()} Robux = ${priceVal.toFixed(2)} Bs (Bonoxs Mobile Auto Price +20)`;
-            const textarea = document.createElement('textarea');
-            textarea.value = textToCopy;
-            document.body.appendChild(textarea);
-            textarea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textarea);
-            showToast(`Copied: ${robuxAmt.toLocaleString()} R$ = ${priceVal.toFixed(2)} Bs`, 'success');
-        }
-
-        function showToast(message, type = 'success') {
-            const container = document.getElementById('toast-container');
-            const toast = document.createElement('div');
+            document.getElementById('totalPrizeCount').innerText = prizes.length;
             
-            let borderColor = 'border-yellow-500/40';
-            let icon = 'fa-circle-check text-yellow-400';
-            if (type === 'success') { borderColor = 'border-emerald-500/50'; icon = 'fa-circle-check text-emerald-400'; }
-            if (type === 'info') { borderColor = 'border-cyan-500/50'; icon = 'fa-circle-info text-cyan-400'; }
-
-            toast.className = `glass-panel p-3.5 rounded-2xl border ${borderColor} text-xs font-mono text-white flex items-center gap-3 shadow-2xl pointer-events-auto transition-all transform -translate-y-4 opacity-0`;
-            toast.innerHTML = `<i class="fa-solid ${icon} text-base"></i><span>${message}</span>`;
-            
-            container.appendChild(toast);
-            setTimeout(() => toast.classList.remove('-translate-y-4', 'opacity-0'), 10);
-            setTimeout(() => {
-                toast.classList.add('-translate-y-4', 'opacity-0');
-                setTimeout(() => toast.remove(), 300);
-            }, 3000);
+            saveToLocalStorage();
+            drawWheel();
+            updateAdminSelects();
         }
+
+        function saveToLocalStorage() {
+            localStorage.setItem('quantum_wheel_prizes_v3', JSON.stringify(prizes));
+            localStorage.setItem('quantum_wheel_history_v3', JSON.stringify(history));
+        }
+
+        function resetToDefault() {
+            prizes = JSON.parse(JSON.stringify(defaultPrizes));
+            history = [];
+            forcedNextPrizeId = "";
+            renderPrizeList();
+            renderHistoryList();
+            showToast(t('resetToast'));
+        }
+
+        function openAddPrizeModal() {
+            document.getElementById('prizeModalTitle').innerText = t('addItemTitle');
+            document.getElementById('prizeEditIndex').value = '-1';
+            document.getElementById('prizeNameInput').value = '';
+            document.getElementById('prizeIconInput').value = '🎁';
+            document.getElementById('prizeColorInput').value = '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0');
+            openModal('prizeModal');
+        }
+
+        function openEditPrizeModal(index) {
+            const prize = prizes[index];
+            document.getElementById('prizeModalTitle').innerText = t('editItemTitle');
+            document.getElementById('prizeEditIndex').value = index;
+            document.getElementById('prizeNameInput').value = prize.name;
+            document.getElementById('prizeIconInput').value = prize.icon || '';
+            document.getElementById('prizeColorInput').value = prize.color;
+            openModal('prizeModal');
+        }
+
+        function savePrize(e) {
+            e.preventDefault();
+            const index = parseInt(document.getElementById('prizeEditIndex').value);
+            const name = document.getElementById('prizeNameInput').value.trim();
+            const icon = document.getElementById('prizeIconInput').value.trim();
+            const color = document.getElementById('prizeColorInput').value;
+
+            if (!name) return;
+
+            if (index === -1) {
+                prizes.push({ id: Date.now(), name, icon, color, weight: 10 });
+                showToast(t('addToast'));
+            } else {
+                prizes[index] = { ...prizes[index], name, icon, color };
+                showToast(t('updateToast'));
+            }
+
+            closeModal('prizeModal');
+            renderPrizeList();
+        }
+
+        function deletePrize(index) {
+            if (prizes.length <= 2) {
+                showToast(t('minItemsToast'), 'error');
+                return;
+            }
+            prizes.splice(index, 1);
+            renderPrizeList();
+            showToast(t('removeToast'));
+        }
+
+        function startSpin() {
+            if (isSpinning) return;
+            if (prizes.length === 0) {
+                showToast(t('minItemsToast'), 'error');
+                return;
+            }
+
+            isSpinning = true;
+            document.getElementById('spinBtn').disabled = true;
+            document.getElementById('statusText').innerText = t('spinStatusSpinning');
+
+            const sliceAngleDeg = 360 / prizes.length;
+            let targetIndex = -1;
+
+            if (forcedNextPrizeId !== "") {
+                const foundIdx = prizes.findIndex(p => p.id == forcedNextPrizeId);
+                if (foundIdx !== -1) {
+                    targetIndex = foundIdx;
+                }
+                forcedNextPrizeId = "";
+                const selectEl = document.getElementById('forceWinSelect');
+                if (selectEl) selectEl.value = "";
+            }
+
+            if (targetIndex === -1) {
+                const totalWeight = prizes.reduce((sum, p) => sum + (p.weight || 10), 0);
+                let randomVal = Math.random() * totalWeight;
+                for (let i = 0; i < prizes.length; i++) {
+                    randomVal -= (prizes[i].weight || 10);
+                    if (randomVal <= 0) {
+                        targetIndex = i;
+                        break;
+                    }
+                }
+                if (targetIndex === -1) targetIndex = prizes.length - 1;
+            }
+
+            const subSliceOffsetDeg = (Math.random() * 0.7 + 0.15) * sliceAngleDeg;
+            const targetSliceStartAngle = targetIndex * sliceAngleDeg;
+            const desiredLandingAngleOnWheel = targetSliceStartAngle + subSliceOffsetDeg;
+
+            const desiredNormalizedFinalRotation = (270 - desiredLandingAngleOnWheel + 360) % 360;
+
+            const currentNormalized = currentRotation % 360;
+            let diff = desiredNormalizedFinalRotation - currentNormalized;
+            if (diff <= 0) diff += 360;
+
+            const extraFullSpins = (Math.floor(Math.random() * 3) + 6) * 360;
+            const targetTotalRotation = currentRotation + extraFullSpins + diff;
+
+            const startTime = performance.now();
+            const duration = 5200;
+            const startRotation = currentRotation;
+
+            let lastSectorIndex = -1;
+
+            function animateSpin(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                const easeOut = 1 - Math.pow(1 - progress, 3.5);
+                
+                currentRotation = startRotation + (targetTotalRotation - startRotation) * easeOut;
+                drawWheel();
+
+                const currentAngleMod = (270 - (currentRotation % 360) + 360) % 360;
+                const currentSector = Math.floor(currentAngleMod / sliceAngleDeg) % prizes.length;
+                if (currentSector !== lastSectorIndex) {
+                    playTickSound(1 - progress);
+                    lastSectorIndex = currentSector;
+                }
+
+                if (progress < 1) {
+                    requestAnimationFrame(animateSpin);
+                } else {
+                    currentRotation = targetTotalRotation % 360;
+                    isSpinning = false;
+                    document.getElementById('spinBtn').disabled = false;
+                    
+                    const winningPrize = prizes[targetIndex];
+                    document.getElementById('statusText').innerText = `${winningPrize.icon || '🏆'} ${winningPrize.name}!`;
+                    
+                    playWinSound();
+                    triggerConfetti();
+                    recordWin(winningPrize);
+                    showWinModal(winningPrize);
+                }
+            }
+
+            requestAnimationFrame(animateSpin);
+        }
+
+        function openSecretModal() {
+            if (isAdminLoggedIn) {
+                openModal('adminModal');
+            } else {
+                document.getElementById('adminPasswordInput').value = '';
+                document.getElementById('passwordErrorMsg').classList.add('hidden');
+                openModal('passwordModal');
+            }
+        }
+
+        function verifyPassword(e) {
+            e.preventDefault();
+            const pwd = document.getElementById('adminPasswordInput').value;
+            if (pwd === 'admin') {
+                isAdminLoggedIn = true;
+                closeModal('passwordModal');
+                showToast(t('unlockedToast'));
+                openModal('adminModal');
+                updateAdminSelects();
+            } else {
+                document.getElementById('passwordErrorMsg').classList.remove('hidden');
+            }
+        }
+
+        function lockAdminMode() {
+            isAdminLoggedIn = false;
+            forcedNextPrizeId = "";
+            closeModal('adminModal');
+            showToast(t('lockedToast'));
+        }
+
+        function toggleStealthMode(active) {
+            const btn = document.getElementById('secretTriggerBtn');
+            if (active) {
+                btn.style.opacity = "0.2";
+            } else {
+                btn.style.opacity = "1";
+            }
+        }
+
+        function updateAdminSelects() {
+            const selectEl = document.getElementById('forceWinSelect');
+            const weightsContainer = document.getElementById('adminWeightsContainer');
+            if (!selectEl || !weightsContainer) return;
+            
+            let selectHtml = `<option value="">${t('noForced')}</option>`;
+            prizes.forEach(p => {
+                const selected = forcedNextPrizeId == p.id ? 'selected' : '';
+                selectHtml += `<option value="${p.id}" ${selected}>${escapeHtml(p.icon || '')} ${escapeHtml(p.name)}</option>`;
+            });
+            selectEl.innerHTML = selectHtml;
+            selectEl.onchange = (e) => {
+                forcedNextPrizeId = e.target.value;
+                if (forcedNextPrizeId) {
+                    showToast(t('overrideToast'));
+                } else {
+                    showToast(t('clearedOverrideToast'));
+                }
+            };
+
+            weightsContainer.innerHTML = '';
+            prizes.forEach((p, idx) => {
+                const row = document.createElement('div');
+                row.className = 'flex items-center justify-between space-x-3 bg-slate-900/80 p-2 rounded-xl border border-white/5';
+                row.innerHTML = `
+                    <span class="text-xs text-slate-300 font-semibold truncate w-36">${escapeHtml(p.icon || '')} ${escapeHtml(p.name)}</span>
+                    <div class="flex items-center space-x-2">
+                        <input type="range" min="1" max="100" value="${p.weight || 10}" onchange="updateWeight(${idx}, this.value)" class="w-24 accent-indigo-500">
+                        <span class="text-xs text-indigo-400 font-mono w-8 text-right">${p.weight || 10}</span>
+                    </div>
+                `;
+                weightsContainer.appendChild(row);
+            });
+        }
+
+        function updateWeight(index, val) {
+            prizes[index].weight = parseInt(val);
+            saveToLocalStorage();
+            updateAdminSelects();
+        }
+
+        function recordWin(prize) {
+            const record = {
+                name: prize.name,
+                icon: prize.icon || '🏆',
+                time: new Date().toLocaleTimeString() + ' ' + new Date().toLocaleDateString()
+            };
+            history.unshift(record);
+            if (history.length > 50) history.pop();
+            saveToLocalStorage();
+            renderHistoryList();
+        }
+
+        function renderHistoryList() {
+            const container = document.getElementById('historyListContainer');
+            if (history.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-500 text-center py-8">${t('noRecords')}</p>`;
+                return;
+            }
+            container.innerHTML = '';
+            history.forEach(item => {
+                const row = document.createElement('div');
+                row.className = 'flex items-center justify-between p-2.5 bg-slate-950/60 border border-white/10 rounded-2xl text-xs';
+                row.innerHTML = `
+                    <span class="font-bold text-slate-200">${escapeHtml(item.icon)} ${escapeHtml(item.name)}</span>
+                    <span class="text-[10px] text-slate-500 font-medium">${item.time}</span>
+                `;
+                container.appendChild(row);
+            });
+        }
+
+        function clearHistory() {
+            history = [];
+            saveToLocalStorage();
+            renderHistoryList();
+            showToast(t('logClearedToast'));
+        }
+
+        function showWinModal(prize) {
+            document.getElementById('winPrizeTitle').innerText = prize.name;
+            document.getElementById('winPrizeIcon').innerText = prize.icon || '🏆';
+            openModal('winModal');
+        }
+
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                const box = modal.querySelector('div > div');
+                if (box) box.classList.remove('scale-95');
+            }, 10);
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.add('opacity-0');
+            const box = modal.querySelector('div > div');
+            if (box) box.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').innerText = msg;
+            toast.classList.remove('translate-y-[-150%]');
+            setTimeout(() => {
+                toast.classList.add('translate-y-[-150%]');
+            }, 3200);
+        }
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+        }
+
+        window.onload = function() {
+            updateUIStrings();
+            drawWheel();
+        };
+
+        window.onresize = function() {
+            drawWheel();
+            resizeParticleCanvas();
+        };
     </script>
 </body>
 </html>
