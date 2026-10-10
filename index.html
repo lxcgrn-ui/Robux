@@ -3,84 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apple Liquid Glass Fortune Wheel</title>
+    <title>Apple Monochrome Liquid Glass Fortune Wheel</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         * {
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", "Helvetica Neue", sans-serif;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
         body {
-            background-color: #030305;
+            background-color: #020205;
             background-image: 
-                radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.08) 0%, transparent 70%),
-                radial-gradient(circle at 100% 100%, rgba(255, 255, 255, 0.03) 0%, transparent 60%);
+                radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.07) 0%, transparent 65%),
+                radial-gradient(circle at 100% 100%, rgba(255, 255, 255, 0.03) 0%, transparent 60%),
+                radial-gradient(circle at 0% 100%, rgba(255, 255, 255, 0.03) 0%, transparent 60%);
             overflow-x: hidden;
             color: #f4f4f5;
         }
+        
+        .spotlight-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            background: radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.06), transparent 60%);
+            z-index: 1;
+        }
+
         .liquid-glass {
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.025);
             backdrop-filter: blur(45px) saturate(210%);
             -webkit-backdrop-filter: blur(45px) saturate(210%);
             border: 1px solid rgba(255, 255, 255, 0.12);
-            box-shadow: 0 35px 70px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.22);
         }
+
         .liquid-glass-pill {
-            background: rgba(255, 255, 255, 0.04);
-            backdrop-filter: blur(30px) saturate(190%);
-            -webkit-backdrop-filter: blur(30px) saturate(190%);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.035);
+            backdrop-filter: blur(35px) saturate(190%);
+            -webkit-backdrop-filter: blur(35px) saturate(190%);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.28);
         }
+
         .apple-btn {
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.06) 100%);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.05) 100%);
             backdrop-filter: blur(30px);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.4);
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
+
         .apple-btn:hover {
             background: linear-gradient(180deg, rgba(255, 255, 255, 0.32) 0%, rgba(255, 255, 255, 0.12) 100%);
             border-color: rgba(255, 255, 255, 0.45);
             transform: translateY(-1.5px) scale(1.02);
-            box-shadow: 0 14px 35px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+            box-shadow: 0 14px 35px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.6);
         }
+
         .apple-btn:active {
             transform: translateY(1px) scale(0.97);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
         }
+
         .spin-center-btn {
-            background: radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.98), rgba(210, 210, 215, 0.9) 55%, rgba(130, 130, 138, 0.95));
-            box-shadow: 0 0 45px rgba(255, 255, 255, 0.3), 0 20px 45px rgba(0, 0, 0, 0.85), inset 0 2px 3px rgba(255, 255, 255, 0.9);
+            background: radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.98), rgba(210, 210, 215, 0.92) 55%, rgba(120, 120, 128, 0.95));
+            box-shadow: 0 0 55px rgba(255, 255, 255, 0.35), 0 25px 50px rgba(0, 0, 0, 0.9), inset 0 2px 4px rgba(255, 255, 255, 0.95);
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
+
         .spin-center-btn:hover {
             transform: translate(-50%, -50%) scale(1.08);
-            box-shadow: 0 0 60px rgba(255, 255, 255, 0.5), 0 25px 55px rgba(0, 0, 0, 0.95), inset 0 2px 4px rgba(255, 255, 255, 1);
+            box-shadow: 0 0 70px rgba(255, 255, 255, 0.55), 0 30px 60px rgba(0, 0, 0, 0.95), inset 0 2px 5px rgba(255, 255, 255, 1);
         }
+
         .spin-center-btn:active {
             transform: translate(-50%, -50%) scale(0.94);
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.25), 0 8px 20px rgba(0, 0, 0, 0.85);
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.25), 0 10px 20px rgba(0, 0, 0, 0.9);
         }
+
         .apple-input {
-            background: rgba(0, 0, 0, 0.55);
+            background: rgba(0, 0, 0, 0.6);
             border: 1px solid rgba(255, 255, 255, 0.18);
             backdrop-filter: blur(25px);
             transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
         }
+
         .apple-input:focus {
             outline: none;
-            border-color: rgba(255, 255, 255, 0.65);
+            border-color: rgba(255, 255, 255, 0.7);
             box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.15);
         }
+
         .glow-wheel {
-            filter: drop-shadow(0 0 55px rgba(255, 255, 255, 0.12));
+            filter: drop-shadow(0 0 60px rgba(255, 255, 255, 0.14));
         }
-        ::-webkit-scrollbar { width: 4px; }
+
+        ::-webkit-scrollbar { width: 5px; height: 5px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.25); border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.45); }
@@ -88,19 +112,20 @@
 </head>
 <body class="h-full text-zinc-100 flex flex-col justify-between relative overflow-x-hidden">
 
+    <div class="spotlight-bg" id="spotlight"></div>
     <canvas id="bgCanvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
 
-    <header class="w-full liquid-glass sticky top-0 z-30 px-6 py-4 flex items-center justify-between border-b border-white/10">
+    <header class="w-full liquid-glass sticky top-0 z-30 px-6 py-4 flex items-center justify-between border-b border-white/15">
         <div class="flex items-center space-x-3.5">
             <div class="w-10 h-10 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center shadow-lg">
-                <i class="fa-solid fa-compact-disc text-white text-lg animate-spin" style="animation-duration: 12s;"></i>
+                <i class="fa-solid fa-compact-disc text-white text-lg animate-spin" style="animation-duration: 15s;"></i>
             </div>
             <div>
-                <h1 id="i18n-title" class="text-base font-bold tracking-tight text-white/90">LUCKY WHEEL</h1>
-                <p id="i18n-subtitle" class="text-[10px] text-white/40 font-semibold tracking-widest uppercase">Apple Liquid Glass</p>
+                <h1 id="i18n-title" class="text-base font-bold tracking-tight text-white/95">FORTUNE WHEEL</h1>
+                <p id="i18n-subtitle" class="text-[10px] text-white/45 font-semibold tracking-widest uppercase">Apple Liquid Glass Monochrome</p>
             </div>
         </div>
-        <div class="flex items-center space-x-3">
+        <div class="flex items-center space-x-2.5">
             <button id="langToggleBtn" onclick="toggleLanguage()" class="apple-btn px-3.5 py-1.5 rounded-full text-xs font-semibold text-white/90 flex items-center space-x-1.5">
                 <i class="fa-solid fa-globe text-white/60"></i>
                 <span id="langLabel">繁體中文</span>
@@ -108,6 +133,14 @@
             <button id="soundToggleBtn" onclick="toggleAudio()" class="apple-btn px-3.5 py-1.5 rounded-full text-xs font-semibold text-white/90 flex items-center space-x-1.5">
                 <i id="soundIcon" class="fa-solid fa-volume-high text-white/60"></i>
                 <span id="soundLabel" class="hidden sm:inline">Sound ON</span>
+            </button>
+            <button onclick="openModal('presetsModal')" class="apple-btn px-3.5 py-1.5 rounded-full text-xs font-semibold text-white/90 flex items-center space-x-1.5">
+                <i class="fa-solid fa-layer-group text-white/60"></i>
+                <span id="i18n-presets" class="hidden md:inline">Presets</span>
+            </button>
+            <button onclick="openModal('statsModal')" class="apple-btn px-3.5 py-1.5 rounded-full text-xs font-semibold text-white/90 flex items-center space-x-1.5">
+                <i class="fa-solid fa-chart-pie text-white/60"></i>
+                <span id="i18n-stats" class="hidden md:inline">Analytics</span>
             </button>
             <button onclick="openModal('historyModal')" class="apple-btn px-3.5 py-1.5 rounded-full text-xs font-semibold text-white/90 flex items-center space-x-1.5">
                 <i class="fa-solid fa-clock-rotate-left text-white/60"></i>
@@ -124,14 +157,14 @@
         <section class="lg:col-span-7 flex flex-col items-center justify-center liquid-glass rounded-[42px] p-8 relative min-h-[580px]">
             <div class="relative w-full max-w-[460px] aspect-square flex items-center justify-center my-2 glow-wheel">
                 
-                <div class="absolute -top-3 left-1/2 -translate-x-1/2 z-30 w-8 h-11 flex flex-col items-center filter drop-shadow-[0_10px_15px_rgba(0,0,0,0.9)] pointer-events-none">
-                    <div class="w-6 h-6 bg-gradient-to-b from-white via-zinc-200 to-zinc-400 rotate-45 transform origin-center rounded-sm border border-white/80 shadow-2xl"></div>
+                <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 z-30 w-8 h-12 flex flex-col items-center filter drop-shadow-[0_12px_18px_rgba(0,0,0,0.9)] pointer-events-none">
+                    <div class="w-6 h-6 bg-gradient-to-b from-white via-zinc-200 to-zinc-400 rotate-45 transform origin-center rounded-sm border border-white/90 shadow-2xl"></div>
                 </div>
 
                 <div class="w-full h-full relative flex items-center justify-center">
-                    <canvas id="wheelCanvas" class="w-full h-full rounded-full" width="900" height="900"></canvas>
+                    <canvas id="wheelCanvas" class="w-full h-full rounded-full" width="1000" height="1000"></canvas>
                     
-                    <button id="spinBtn" onclick="startSpin()" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-28 h-28 rounded-full spin-center-btn flex flex-col items-center justify-center z-40 cursor-pointer border border-white/80 group">
+                    <button id="spinBtn" onclick="startSpin()" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-28 h-28 rounded-full spin-center-btn flex flex-col items-center justify-center z-40 cursor-pointer border border-white/90 group">
                         <div class="w-22 h-22 rounded-full flex flex-col items-center justify-center">
                             <i class="fa-solid fa-play text-xl text-zinc-950 ml-0.5 group-hover:scale-110 transition-transform"></i>
                             <span id="i18n-spin" class="text-[11px] tracking-widest font-black text-zinc-950 mt-0.5 uppercase">SPIN</span>
@@ -141,29 +174,34 @@
             </div>
 
             <div class="mt-6 flex items-center justify-center w-full">
-                <div id="statusText" class="text-xs sm:text-sm font-medium text-white/90 liquid-glass-pill px-8 py-3.5 rounded-full text-center w-full max-w-md border border-white/15 shadow-2xl">
-                    Ready to spin.
+                <div id="statusText" class="text-xs sm:text-sm font-medium text-white/95 liquid-glass-pill px-8 py-3.5 rounded-full text-center w-full max-w-md border border-white/20 shadow-2xl">
+                    Ready to spin. Press SPIN or Spacebar.
                 </div>
             </div>
         </section>
 
         <section class="lg:col-span-5 liquid-glass rounded-[42px] p-7 flex flex-col h-[580px]">
-            <div class="flex items-center justify-between pb-5 border-b border-white/10">
+            <div class="flex items-center justify-between pb-5 border-b border-white/15">
                 <div class="flex items-center space-x-3">
                     <div class="w-8 h-8 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center">
-                        <i class="fa-solid fa-sliders text-white/80 text-xs"></i>
+                        <i class="fa-solid fa-sliders text-white/90 text-xs"></i>
                     </div>
-                    <h2 id="i18n-itemManager" class="text-base font-semibold text-white/90">Item Manager</h2>
+                    <h2 id="i18n-itemManager" class="text-base font-semibold text-white/95">Item Manager Studio</h2>
                 </div>
-                <button onclick="openAddPrizeModal()" class="apple-btn px-4 py-2 rounded-full text-xs font-semibold text-white flex items-center space-x-2">
-                    <i class="fa-solid fa-plus text-xs"></i>
-                    <span id="i18n-addItem">Add Item</span>
-                </button>
+                <div class="flex items-center space-x-2">
+                    <button onclick="shufflePrizes()" class="apple-btn p-2 rounded-full text-white/80 hover:text-white" title="Shuffle Items">
+                        <i class="fa-solid fa-shuffle text-xs"></i>
+                    </button>
+                    <button onclick="openAddPrizeModal()" class="apple-btn px-4 py-2 rounded-full text-xs font-semibold text-white flex items-center space-x-2">
+                        <i class="fa-solid fa-plus text-xs"></i>
+                        <span id="i18n-addItem">Add Item</span>
+                    </button>
+                </div>
             </div>
 
             <div id="prizeListContainer" class="flex-1 overflow-y-auto my-4 space-y-3 pr-1"></div>
 
-            <div class="pt-4 border-t border-white/10 flex justify-between items-center text-xs text-white/50 font-medium">
+            <div class="pt-4 border-t border-white/15 flex justify-between items-center text-xs text-white/55 font-medium">
                 <span><span id="i18n-itemCount">Items Count:</span> <strong id="totalPrizeCount" class="text-white font-semibold">0</strong></span>
                 <span class="flex items-center space-x-1.5">
                     <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
@@ -174,21 +212,21 @@
     </main>
 
     <div class="fixed bottom-5 left-5 z-40">
-        <button id="secretTriggerBtn" onclick="openSecretModal()" class="w-9 h-9 rounded-full liquid-glass text-white/20 hover:text-white/90 flex items-center justify-center transition-all group" title="System Credentials">
+        <button id="secretTriggerBtn" onclick="openSecretModal()" class="w-9 h-9 rounded-full liquid-glass text-white/20 hover:text-white/95 flex items-center justify-center transition-all group" title="System Credentials">
             <i class="fa-solid fa-shield-halved text-xs group-hover:rotate-12 transition-transform"></i>
         </button>
     </div>
 
-    <div id="passwordModal" class="fixed inset-0 bg-black/80 backdrop-blur-3xl z-50 flex items-center justify-center hidden opacity-0 transition-all duration-300">
+    <div id="passwordModal" class="fixed inset-0 bg-black/85 backdrop-blur-3xl z-50 flex items-center justify-center hidden opacity-0 transition-all duration-300">
         <div class="liquid-glass w-full max-w-sm rounded-[36px] p-7 shadow-2xl transform scale-95 transition-all duration-300">
             <div class="flex justify-between items-center mb-5">
-                <h3 class="text-sm font-semibold text-white/90 flex items-center space-x-2">
-                    <i class="fa-solid fa-lock text-white/70"></i>
+                <h3 class="text-sm font-semibold text-white/95 flex items-center space-x-2">
+                    <i class="fa-solid fa-lock text-white/75"></i>
                     <span id="i18n-sysCredentials">System Credentials</span>
                 </h3>
-                <button onclick="closeModal('passwordModal')" class="text-white/40 hover:text-white/80"><i class="fa-solid fa-xmark text-lg"></i></button>
+                <button onclick="closeModal('passwordModal')" class="text-white/40 hover:text-white/90"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
-            <p id="i18n-sysCredsPrompt" class="text-xs text-white/60 mb-5 leading-relaxed">Enter administrator password to access override control console:</p>
+            <p id="i18n-sysCredsPrompt" class="text-xs text-white/65 mb-5 leading-relaxed">Enter administrator password (admin) to access override control console:</p>
             <form onsubmit="verifyPassword(event)" class="space-y-4">
                 <div>
                     <input type="password" id="adminPasswordInput" placeholder="Password (admin)" class="w-full apple-input rounded-2xl px-4 py-3 text-xs text-white placeholder-white/30">
@@ -202,36 +240,36 @@
         </div>
     </div>
 
-    <div id="adminModal" class="fixed inset-0 bg-black/80 backdrop-blur-3xl z-50 flex items-center justify-center hidden opacity-0 transition-all duration-300">
+    <div id="adminModal" class="fixed inset-0 bg-black/85 backdrop-blur-3xl z-50 flex items-center justify-center hidden opacity-0 transition-all duration-300">
         <div class="liquid-glass w-full max-w-lg rounded-[40px] p-7 shadow-2xl transform scale-95 transition-all duration-300 max-h-[88vh] flex flex-col">
-            <div class="flex justify-between items-center pb-4 border-b border-white/10">
+            <div class="flex justify-between items-center pb-4 border-b border-white/15">
                 <div class="flex items-center space-x-3">
                     <div class="w-9 h-9 rounded-2xl bg-white/10 text-white flex items-center justify-center border border-white/20">
                         <i class="fa-solid fa-wand-magic-sparkles"></i>
                     </div>
                     <div>
                         <h3 id="i18n-adminTitle" class="text-sm font-bold text-white">Quantum Override Console</h3>
-                        <p id="i18n-adminSub" class="text-[10px] text-white/50 font-semibold tracking-wider uppercase">Natural Rigging Active</p>
+                        <p id="i18n-adminSub" class="text-[10px] text-white/55 font-semibold tracking-wider uppercase">Natural Rigging Active</p>
                     </div>
                 </div>
-                <button onclick="closeModal('adminModal')" class="text-white/40 hover:text-white/80"><i class="fa-solid fa-xmark text-lg"></i></button>
+                <button onclick="closeModal('adminModal')" class="text-white/40 hover:text-white/90"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
 
             <div class="my-5 space-y-4 overflow-y-auto flex-1 pr-1">
                 <div class="liquid-glass-pill rounded-2xl p-4 space-y-3">
-                    <label class="block text-xs font-semibold text-white/90 flex items-center space-x-2">
-                        <i class="fa-solid fa-bullseye text-white/70"></i>
+                    <label class="block text-xs font-semibold text-white/95 flex items-center space-x-2">
+                        <i class="fa-solid fa-bullseye text-white/75"></i>
                         <span id="i18n-forcedWinnerLabel">100% Guaranteed Forced Winner:</span>
                     </label>
                     <select id="forceWinSelect" class="w-full apple-input rounded-xl px-4 py-2.5 text-xs text-white bg-zinc-950 border border-white/20">
                         <option value="">-- No Forced Guarantee (Use Probability) --</option>
                     </select>
-                    <p id="i18n-forcedDesc" class="text-[11px] text-white/40 leading-relaxed">Selecting an item forces the wheel to slow down with natural realistic physics and land cleanly on this exact item.</p>
+                    <p id="i18n-forcedDesc" class="text-[11px] text-white/50 leading-relaxed">Selecting an item forces the wheel to slow down with natural realistic physics and land cleanly on this exact item.</p>
                 </div>
 
                 <div class="liquid-glass-pill rounded-2xl p-4 space-y-3">
-                    <label class="block text-xs font-semibold text-white/90 flex items-center space-x-2">
-                        <i class="fa-solid fa-scale-balanced text-white/70"></i>
+                    <label class="block text-xs font-semibold text-white/95 flex items-center space-x-2">
+                        <i class="fa-solid fa-scale-balanced text-white/75"></i>
                         <span id="i18n-weightsLabel">Custom Probability Weights (Visual Sizes Remain Equal):</span>
                     </label>
                     <div id="adminWeightsContainer" class="space-y-2.5 max-h-48 overflow-y-auto pr-1"></div>
@@ -239,14 +277,14 @@
 
                 <div class="liquid-glass-pill rounded-2xl p-4 flex items-center justify-between">
                     <div>
-                        <h4 id="i18n-stealthLabel" class="text-xs font-semibold text-white/90">Stealth Mode Indicator</h4>
-                        <p id="i18n-stealthDesc" class="text-[10px] text-white/40">Hide trigger icon completely for ultra stealth</p>
+                        <h4 id="i18n-stealthLabel" class="text-xs font-semibold text-white/95">Stealth Mode Indicator</h4>
+                        <p id="i18n-stealthDesc" class="text-[10px] text-white/50">Hide trigger icon completely for ultra stealth</p>
                     </div>
                     <input type="checkbox" id="stealthToggle" onchange="toggleStealthMode(this.checked)" class="w-4 h-4 accent-white rounded cursor-pointer">
                 </div>
             </div>
 
-            <div class="pt-4 border-t border-white/10 flex justify-between items-center">
+            <div class="pt-4 border-t border-white/15 flex justify-between items-center">
                 <button onclick="lockAdminMode()" class="apple-btn px-4 py-2 rounded-full text-xs font-semibold text-rose-300 flex items-center space-x-1.5">
                     <i class="fa-solid fa-lock"></i>
                     <span id="i18n-lockAdmin">Lock Admin</span>
@@ -256,25 +294,25 @@
         </div>
     </div>
 
-    <div id="prizeModal" class="fixed inset-0 bg-black/80 backdrop-blur-3xl z-50 flex items-center justify-center hidden opacity-0 transition-all duration-300">
+    <div id="prizeModal" class="fixed inset-0 bg-black/85 backdrop-blur-3xl z-50 flex items-center justify-center hidden opacity-0 transition-all duration-300">
         <div class="liquid-glass w-full max-w-md rounded-[36px] p-7 shadow-2xl transform scale-95 transition-all duration-300">
             <div class="flex justify-between items-center mb-5">
                 <h3 id="prizeModalTitle" class="text-sm font-semibold text-white">Configure Item</h3>
-                <button onclick="closeModal('prizeModal')" class="text-white/40 hover:text-white/80"><i class="fa-solid fa-xmark text-lg"></i></button>
+                <button onclick="closeModal('prizeModal')" class="text-white/40 hover:text-white/90"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
             <form id="prizeForm" onsubmit="savePrize(event)" class="space-y-4">
                 <input type="hidden" id="prizeEditIndex" value="-1">
                 <div>
-                    <label id="i18n-itemTitleLabel" class="block text-xs font-medium text-white/60 mb-1.5">Item Title</label>
+                    <label id="i18n-itemTitleLabel" class="block text-xs font-medium text-white/65 mb-1.5">Item Title</label>
                     <input type="text" id="prizeNameInput" required placeholder="e.g. iPhone 16 Pro" class="w-full apple-input rounded-2xl px-4 py-2.5 text-xs text-white placeholder-white/30">
                 </div>
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label id="i18n-iconLabel" class="block text-xs font-medium text-white/60 mb-1.5">Icon / Emoji</label>
+                        <label id="i18n-iconLabel" class="block text-xs font-medium text-white/65 mb-1.5">Icon / Emoji</label>
                         <input type="text" id="prizeIconInput" maxlength="4" placeholder="e.g. 📱" class="w-full apple-input rounded-2xl px-4 py-2.5 text-xs text-white placeholder-white/30">
                     </div>
                     <div>
-                        <label id="i18n-colorLabel" class="block text-xs font-medium text-white/60 mb-1.5">Monochrome Shade</label>
+                        <label id="i18n-colorLabel" class="block text-xs font-medium text-white/65 mb-1.5">Monochrome Shade</label>
                         <select id="prizeColorInput" class="w-full apple-input rounded-2xl px-4 py-2.5 text-xs text-white bg-zinc-950 border border-white/20">
                             <option value="#ffffff">Pure White</option>
                             <option value="#e4e4e7">Slate Silver</option>
@@ -294,37 +332,93 @@
     </div>
 
     <div id="winModal" class="fixed inset-0 bg-black/85 backdrop-blur-3xl z-50 flex items-center justify-center hidden opacity-0 transition-all duration-300">
-        <div class="liquid-glass border-white/30 w-full max-w-sm rounded-[42px] p-8 text-center shadow-2xl transform scale-95 transition-all duration-300 relative overflow-hidden">
-            <div class="w-24 h-24 rounded-3xl liquid-glass-pill mx-auto flex items-center justify-center shadow-2xl mb-5 border border-white/30">
+        <canvas id="fireworksCanvas" class="absolute inset-0 pointer-events-none z-0"></canvas>
+        <div class="liquid-glass border-white/35 w-full max-w-sm rounded-[42px] p-8 text-center shadow-2xl transform scale-95 transition-all duration-300 relative z-10 overflow-hidden">
+            <div class="w-24 h-24 rounded-3xl liquid-glass-pill mx-auto flex items-center justify-center shadow-2xl mb-5 border border-white/35">
                 <span id="winPrizeIcon" class="text-4xl">🏆</span>
             </div>
-            <span id="i18n-victoryTitle" class="text-[10px] font-extrabold text-white/60 tracking-widest uppercase">Result Selected</span>
+            <span id="i18n-victoryTitle" class="text-[10px] font-extrabold text-white/65 tracking-widest uppercase">Result Selected</span>
             <h3 id="winPrizeTitle" class="text-2xl font-bold text-white my-2">--</h3>
-            <p id="i18n-victoryDesc" class="text-xs text-white/50 mb-6 leading-relaxed">The calculation outcome has landed cleanly.</p>
+            <p id="i18n-victoryDesc" class="text-xs text-white/55 mb-6 leading-relaxed">The calculation outcome has landed cleanly.</p>
             <button onclick="closeModal('winModal')" class="w-full py-3.5 apple-btn rounded-2xl text-white font-semibold text-xs" id="i18n-claimReward">
                 Claim Reward & Continue
             </button>
         </div>
     </div>
 
-    <div id="historyModal" class="fixed inset-0 bg-black/80 backdrop-blur-3xl z-50 flex items-center justify-center hidden opacity-0 transition-all duration-300">
+    <div id="presetsModal" class="fixed inset-0 bg-black/85 backdrop-blur-3xl z-50 flex items-center justify-center hidden opacity-0 transition-all duration-300">
+        <div class="liquid-glass w-full max-w-md rounded-[40px] p-7 shadow-2xl transform scale-95 transition-all duration-300">
+            <div class="flex justify-between items-center pb-4 border-b border-white/15">
+                <h3 id="i18n-presetsTitle" class="text-sm font-semibold text-white flex items-center space-x-2">
+                    <i class="fa-solid fa-layer-group text-white/75"></i>
+                    <span>Preset Collections</span>
+                </h3>
+                <button onclick="closeModal('presetsModal')" class="text-white/40 hover:text-white/90"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div class="my-5 space-y-3">
+                <button onclick="loadPreset('apple')" class="w-full apple-btn p-4 rounded-2xl text-left flex items-center justify-between group">
+                    <div>
+                        <h4 class="text-xs font-semibold text-white/95">🍎 Apple Ecosystem Gear</h4>
+                        <p class="text-[10px] text-white/50 mt-0.5">iPhone 16 Pro, MacBook Pro, Apple Watch Ultra...</p>
+                    </div>
+                    <i class="fa-solid fa-arrow-right text-xs text-white/40 group-hover:translate-x-1 transition-transform"></i>
+                </button>
+                <button onclick="loadPreset('decision')" class="w-full apple-btn p-4 rounded-2xl text-left flex items-center justify-between group">
+                    <div>
+                        <h4 class="text-xs font-semibold text-white/95">⚖️ Quick Decision Maker</h4>
+                        <p class="text-[10px] text-white/50 mt-0.5">Yes, No, Maybe, Definitely, Try Again...</p>
+                    </div>
+                    <i class="fa-solid fa-arrow-right text-xs text-white/40 group-hover:translate-x-1 transition-transform"></i>
+                </button>
+                <button onclick="loadPreset('tasks')" class="w-full apple-btn p-4 rounded-2xl text-left flex items-center justify-between group">
+                    <div>
+                        <h4 class="text-xs font-semibold text-white/95">☕ Daily Task Allocator</h4>
+                        <p class="text-[10px] text-white/50 mt-0.5">Coffee Break, Code Review, Emails, Gym, Rest...</p>
+                    </div>
+                    <i class="fa-solid fa-arrow-right text-xs text-white/40 group-hover:translate-x-1 transition-transform"></i>
+                </button>
+            </div>
+            <div class="pt-4 border-t border-white/15 flex justify-end">
+                <button onclick="closeModal('presetsModal')" class="apple-btn px-5 py-2 rounded-full text-xs font-semibold text-white/80" id="i18n-closePresets">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="statsModal" class="fixed inset-0 bg-black/85 backdrop-blur-3xl z-50 flex items-center justify-center hidden opacity-0 transition-all duration-300">
         <div class="liquid-glass w-full max-w-md rounded-[40px] p-7 shadow-2xl transform scale-95 transition-all duration-300 max-h-[82vh] flex flex-col">
-            <div class="flex justify-between items-center pb-4 border-b border-white/10">
+            <div class="flex justify-between items-center pb-4 border-b border-white/15">
+                <h3 id="i18n-statsTitle" class="text-sm font-semibold text-white flex items-center space-x-2">
+                    <i class="fa-solid fa-chart-pie text-white/75"></i>
+                    <span>Live Win Analytics</span>
+                </h3>
+                <button onclick="closeModal('statsModal')" class="text-white/40 hover:text-white/90"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div id="statsContentContainer" class="flex-1 overflow-y-auto my-4 space-y-3 pr-1"></div>
+            <div class="pt-4 border-t border-white/15 flex justify-between items-center">
+                <span class="text-xs text-white/55"><span id="i18n-totalSpinsLabel">Total Spins:</span> <strong id="totalSpinsCount" class="text-white font-semibold">0</strong></span>
+                <button onclick="closeModal('statsModal')" class="apple-btn px-5 py-2 rounded-full text-xs font-semibold text-white/80" id="i18n-closeStats">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="historyModal" class="fixed inset-0 bg-black/85 backdrop-blur-3xl z-50 flex items-center justify-center hidden opacity-0 transition-all duration-300">
+        <div class="liquid-glass w-full max-w-md rounded-[40px] p-7 shadow-2xl transform scale-95 transition-all duration-300 max-h-[82vh] flex flex-col">
+            <div class="flex justify-between items-center pb-4 border-b border-white/15">
                 <h3 class="text-sm font-semibold text-white flex items-center space-x-2">
-                    <i class="fa-solid fa-clock-rotate-left text-white/70"></i>
+                    <i class="fa-solid fa-clock-rotate-left text-white/75"></i>
                     <span id="i18n-historyTitle">Spin History Log</span>
                 </h3>
-                <button onclick="closeModal('historyModal')" class="text-white/40 hover:text-white/80"><i class="fa-solid fa-xmark text-lg"></i></button>
+                <button onclick="closeModal('historyModal')" class="text-white/40 hover:text-white/90"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
             <div id="historyListContainer" class="flex-1 overflow-y-auto my-4 space-y-2.5 pr-1"></div>
-            <div class="pt-4 border-t border-white/10 flex justify-between items-center">
+            <div class="pt-4 border-t border-white/15 flex justify-between items-center">
                 <button onclick="clearHistory()" class="apple-btn px-4 py-2 rounded-full text-xs font-semibold text-rose-300" id="i18n-clearLog">Clear Log</button>
                 <button onclick="closeModal('historyModal')" class="apple-btn px-5 py-2 rounded-full text-xs font-semibold text-white/80" id="i18n-close">Close</button>
             </div>
         </div>
     </div>
 
-    <div id="toast" class="fixed top-6 right-6 z-50 liquid-glass text-white px-5 py-3 rounded-2xl shadow-2xl transform -translate-y-24 transition-transform duration-300 flex items-center space-x-3 text-xs border-white/20">
+    <div id="toast" class="fixed top-6 right-6 z-50 liquid-glass text-white px-5 py-3 rounded-2xl shadow-2xl transform -translate-y-24 transition-transform duration-300 flex items-center space-x-3 text-xs border-white/25">
         <i class="fa-solid fa-circle-check text-white text-sm"></i>
         <span id="toastMsg" class="font-medium">Notification</span>
     </div>
@@ -332,16 +426,18 @@
     <script>
         const translations = {
             en: {
-                title: "LUCKY WHEEL",
-                subtitle: "Apple Liquid Glass",
+                title: "FORTUNE WHEEL",
+                subtitle: "Apple Liquid Glass Monochrome",
                 soundOn: "Sound ON",
                 soundOff: "Sound OFF",
+                presets: "Presets",
+                stats: "Analytics",
                 history: "History",
                 reset: "Reset",
                 spin: "SPIN",
                 spinStatusReady: "Ready to spin. Press SPIN or Spacebar.",
-                spinStatusSpinning: "Spinning... Calculating outcome.",
-                itemManager: "Item Manager",
+                spinStatusSpinning: "Spinning smoothly... Calculating outcome.",
+                itemManager: "Item Manager Studio",
                 addItem: "Add Item",
                 itemCount: "Items Count:",
                 visualAngles: "Visual Slices:",
@@ -355,7 +451,7 @@
                 cancel: "Cancel",
                 saveItem: "Save Item",
                 sysCredentials: "System Credentials",
-                sysCredsPrompt: "Enter administrator password to access override control console:",
+                sysCredsPrompt: "Enter administrator password (admin) to access override control console:",
                 passwordPlaceholder: "Password (admin)",
                 authFailed: "Authentication failed. Incorrect password.",
                 authenticate: "Authenticate",
@@ -372,6 +468,11 @@
                 victoryTitle: "Result Selected",
                 victoryDesc: "The calculation outcome has landed cleanly.",
                 claimReward: "Claim Reward & Continue",
+                presetsTitle: "Preset Collections",
+                closePresets: "Close",
+                statsTitle: "Live Win Analytics",
+                totalSpinsLabel: "Total Spins:",
+                closeStats: "Close",
                 historyTitle: "Spin History Log",
                 noRecords: "No spin records logged.",
                 clearLog: "Clear Log",
@@ -385,19 +486,22 @@
                 clearedOverrideToast: "Forced override cleared.",
                 logClearedToast: "Spin log cleared.",
                 unlockedToast: "Admin console unlocked.",
-                lockedToast: "Admin session locked."
+                lockedToast: "Admin session locked.",
+                presetLoaded: "Preset loaded successfully!"
             },
             zh: {
                 title: "幸運轉盤",
-                subtitle: "Apple 流動玻璃版",
+                subtitle: "Apple 單色流動玻璃版",
                 soundOn: "音效 開",
                 soundOff: "音效 關",
+                presets: "預設集",
+                stats: "數據分析",
                 history: "歷史紀錄",
                 reset: "重設",
                 spin: "開始抽獎",
                 spinStatusReady: "轉盤已準備就緒，點擊按鈕或按下空白鍵開始。",
                 spinStatusSpinning: "轉盤流暢旋轉中... 正在計算結果。",
-                itemManager: "獎品管理",
+                itemManager: "獎品管理工作室",
                 addItem: "新增獎品",
                 itemCount: "獎品總數：",
                 visualAngles: "視覺分界：",
@@ -411,7 +515,7 @@
                 cancel: "取消",
                 saveItem: "儲存獎品",
                 sysCredentials: "系統憑證驗證",
-                sysCredsPrompt: "請輸入管理員密碼以存取控制台：",
+                sysCredsPrompt: "請輸入管理員密碼 (admin) 以存取控制台：",
                 passwordPlaceholder: "密碼 (admin)",
                 authFailed: "驗證失敗，密碼不正確。",
                 authenticate: "驗證登入",
@@ -428,6 +532,11 @@
                 victoryTitle: "恭喜獲得獎品",
                 victoryDesc: "轉盤已精準平滑對齊計算結果！",
                 claimReward: "領取獎勵並繼續",
+                presetsTitle: "預設集選單",
+                closePresets: "關閉",
+                statsTitle: "即時中獎數據分析",
+                totalSpinsLabel: "總抽獎次數：",
+                closeStats: "關閉",
                 historyTitle: "歷史抽獎紀錄",
                 noRecords: "尚無抽獎紀錄。",
                 clearLog: "清除紀錄",
@@ -441,7 +550,8 @@
                 clearedOverrideToast: "已清除指定必中設定。",
                 logClearedToast: "已清除抽獎紀錄。",
                 unlockedToast: "已解鎖管理員 Console。",
-                lockedToast: "管理員控制台已鎖定。"
+                lockedToast: "管理員控制台已鎖定。",
+                presetLoaded: "已成功載入預設集！"
             }
         };
 
@@ -462,6 +572,8 @@
             document.getElementById('i18n-title').innerText = t('title');
             document.getElementById('i18n-subtitle').innerText = t('subtitle');
             document.getElementById('soundLabel').innerText = audioMuted ? t('soundOff') : t('soundOn');
+            document.getElementById('i18n-presets').innerText = t('presets');
+            document.getElementById('i18n-stats').innerText = t('stats');
             document.getElementById('i18n-history').innerText = t('history');
             document.getElementById('i18n-reset').innerText = t('reset');
             document.getElementById('i18n-spin').innerText = t('spin');
@@ -501,12 +613,19 @@
             document.getElementById('i18n-victoryDesc').innerText = t('victoryDesc');
             document.getElementById('i18n-claimReward').innerText = t('claimReward');
 
+            document.getElementById('i18n-presetsTitle').innerText = t('presetsTitle');
+            document.getElementById('i18n-closePresets').innerText = t('closePresets');
+            document.getElementById('i18n-statsTitle').innerText = t('statsTitle');
+            document.getElementById('i18n-totalSpinsLabel').innerText = t('totalSpinsLabel');
+            document.getElementById('i18n-closeStats').innerText = t('closeStats');
+
             document.getElementById('i18n-historyTitle').innerText = t('historyTitle');
             document.getElementById('i18n-clearLog').innerText = t('clearLog');
             document.getElementById('i18n-close').innerText = t('close');
 
             renderPrizeList();
             renderHistoryList();
+            renderStatsList();
             updateAdminSelects();
         }
 
@@ -521,6 +640,7 @@
 
         let prizes = JSON.parse(localStorage.getItem('apple_mono_prizes')) || defaultPrizes;
         let history = JSON.parse(localStorage.getItem('apple_mono_history')) || [];
+        let winStats = JSON.parse(localStorage.getItem('apple_mono_stats')) || {};
         
         let currentRotation = 0;
         let isSpinning = false;
@@ -542,13 +662,13 @@
         window.addEventListener('resize', resizeBgCanvas);
         resizeBgCanvas();
 
-        for (let i = 0; i < 50; i++) {
+        for (let i = 0; i < 60; i++) {
             bgParticles.push({
                 x: Math.random() * window.innerWidth,
                 y: Math.random() * window.innerHeight,
-                radius: Math.random() * 2.2 + 0.5,
-                vx: (Math.random() - 0.5) * 0.25,
-                vy: (Math.random() - 0.5) * 0.25,
+                radius: Math.random() * 2.5 + 0.5,
+                vx: (Math.random() - 0.5) * 0.2,
+                vy: (Math.random() - 0.5) * 0.2,
                 alpha: Math.random() * 0.35 + 0.05
             });
         }
@@ -572,6 +692,14 @@
         }
         bgLoop();
 
+        window.addEventListener('mousemove', (e) => {
+            const spotlight = document.getElementById('spotlight');
+            if (spotlight) {
+                spotlight.style.setProperty('--mouse-x', `${e.clientX}px`);
+                spotlight.style.setProperty('--mouse-y', `${e.clientY}px`);
+            }
+        });
+
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
         function toggleAudio() {
@@ -586,33 +714,33 @@
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
             osc.type = 'sine';
-            const baseFreq = 750 + velocityRatio * 450;
+            const baseFreq = 800 + velocityRatio * 500;
             osc.frequency.setValueAtTime(baseFreq, audioCtx.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(180, audioCtx.currentTime + 0.02);
-            gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
-            gain.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + 0.02);
+            osc.frequency.exponentialRampToValueAtTime(150, audioCtx.currentTime + 0.025);
+            gain.gain.setValueAtTime(0.07, audioCtx.currentTime);
+            gain.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + 0.025);
             osc.connect(gain);
             gain.connect(audioCtx.destination);
             osc.start();
-            osc.stop(audioCtx.currentTime + 0.02);
+            osc.stop(audioCtx.currentTime + 0.025);
         }
 
         function playWinSound() {
             if (audioMuted) return;
             if (audioCtx.state === 'suspended') audioCtx.resume();
             const now = audioCtx.currentTime;
-            const notes = [523.25, 659.25, 783.99, 1046.50, 1318.51, 1567.98];
+            const notes = [523.25, 659.25, 783.99, 1046.50, 1318.51, 1567.98, 2093.00];
             notes.forEach((freq, idx) => {
                 const osc = audioCtx.createOscillator();
                 const gain = audioCtx.createGain();
                 osc.type = 'sine';
-                osc.frequency.setValueAtTime(freq, now + idx * 0.04);
-                gain.gain.setValueAtTime(0.09, now + idx * 0.04);
-                gain.gain.linearRampToValueAtTime(0.001, now + idx * 0.04 + 0.3);
+                osc.frequency.setValueAtTime(freq, now + idx * 0.05);
+                gain.gain.setValueAtTime(0.1, now + idx * 0.05);
+                gain.gain.linearRampToValueAtTime(0.001, now + idx * 0.05 + 0.35);
                 osc.connect(gain);
                 gain.connect(audioCtx.destination);
-                osc.start(now + idx * 0.04);
-                osc.stop(now + idx * 0.04 + 0.3);
+                osc.start(now + idx * 0.05);
+                osc.stop(now + idx * 0.05 + 0.35);
             });
         }
 
@@ -621,13 +749,13 @@
             const height = canvas.height;
             const centerX = width / 2;
             const centerY = height / 2;
-            const radius = Math.min(centerX, centerY) - 30;
+            const radius = Math.min(centerX, centerY) - 35;
 
             ctx.clearRect(0, 0, width, height);
 
             if (prizes.length === 0) {
                 ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
-                ctx.font = '500 24px -apple-system, sans-serif';
+                ctx.font = '500 28px -apple-system, sans-serif';
                 ctx.textAlign = 'center';
                 ctx.fillText('Please add items', centerX, centerY);
                 return;
@@ -647,15 +775,15 @@
                 ctx.fillStyle = prize.color;
                 ctx.fill();
 
-                const gradient = ctx.createRadialGradient(centerX, centerY, 40, centerX, centerY, radius);
-                gradient.addColorStop(0, 'rgba(255, 255, 255, 0.28)');
-                gradient.addColorStop(0.65, 'rgba(255, 255, 255, 0.03)');
-                gradient.addColorStop(1, 'rgba(0, 0, 0, 0.55)');
+                const gradient = ctx.createRadialGradient(centerX, centerY, 50, centerX, centerY, radius);
+                gradient.addColorStop(0, 'rgba(255, 255, 255, 0.32)');
+                gradient.addColorStop(0.6, 'rgba(255, 255, 255, 0.03)');
+                gradient.addColorStop(1, 'rgba(0, 0, 0, 0.6)');
                 ctx.fillStyle = gradient;
                 ctx.fill();
 
-                ctx.lineWidth = 2;
-                ctx.strokeStyle = 'rgba(255, 255, 255, 0.22)';
+                ctx.lineWidth = 2.5;
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.25)';
                 ctx.stroke();
 
                 ctx.save();
@@ -665,20 +793,20 @@
                 
                 const hexColor = prize.color.toLowerCase();
                 if (hexColor === '#ffffff' || hexColor === '#e4e4e7') {
-                    ctx.fillStyle = '#09090b';
-                    ctx.shadowColor = 'rgba(255, 255, 255, 0.6)';
+                    ctx.fillStyle = '#050507';
+                    ctx.shadowColor = 'rgba(255, 255, 255, 0.65)';
                 } else {
                     ctx.fillStyle = '#ffffff';
-                    ctx.shadowColor = 'rgba(0, 0, 0, 0.9)';
+                    ctx.shadowColor = 'rgba(0, 0, 0, 0.95)';
                 }
                 
-                ctx.font = '600 24px -apple-system, sans-serif';
-                ctx.shadowBlur = 8;
+                ctx.font = '600 26px -apple-system, sans-serif';
+                ctx.shadowBlur = 10;
                 
                 let displayName = (prize.icon ? prize.icon + " " : "") + prize.name;
-                if (displayName.length > 15) displayName = displayName.substring(0, 14) + '..';
+                if (displayName.length > 14) displayName = displayName.substring(0, 13) + '..';
                 
-                ctx.fillText(displayName, radius - 55, 8);
+                ctx.fillText(displayName, radius - 60, 9);
                 ctx.restore();
 
                 startAngle = endAngle;
@@ -686,14 +814,14 @@
 
             ctx.beginPath();
             ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
-            ctx.lineWidth = 14;
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
+            ctx.lineWidth = 16;
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.18)';
             ctx.stroke();
 
             ctx.beginPath();
-            ctx.arc(centerX, centerY, radius - 7, 0, 2 * Math.PI);
-            ctx.lineWidth = 1.5;
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+            ctx.arc(centerX, centerY, radius - 8, 0, 2 * Math.PI);
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.35)';
             ctx.stroke();
         }
 
@@ -703,20 +831,20 @@
             
             prizes.forEach((prize, index) => {
                 const item = document.createElement('div');
-                item.className = 'flex items-center justify-between p-3.5 liquid-glass-pill rounded-2xl border border-white/10 hover:border-white/20 transition';
+                item.className = 'flex items-center justify-between p-3.5 liquid-glass-pill rounded-2xl border border-white/10 hover:border-white/25 transition';
                 item.innerHTML = `
                     <div class="flex items-center space-x-3.5">
-                        <div class="w-5 h-5 rounded-full shadow-inner border border-white/40 shrink-0" style="background-color: ${prize.color};"></div>
+                        <div class="w-5 h-5 rounded-full shadow-inner border border-white/50 shrink-0" style="background-color: ${prize.color};"></div>
                         <div class="overflow-hidden">
-                            <h4 class="text-xs font-semibold text-white/90 truncate">${escapeHtml(prize.icon || '')} ${escapeHtml(prize.name)}</h4>
-                            <span class="text-[10px] text-white/40 font-medium">${(360/prizes.length).toFixed(1)}° (${t('strictlyEqual')})</span>
+                            <h4 class="text-xs font-semibold text-white/95 truncate">${escapeHtml(prize.icon || '')} ${escapeHtml(prize.name)}</h4>
+                            <span class="text-[10px] text-white/45 font-medium">${(360/prizes.length).toFixed(1)}° (${t('strictlyEqual')})</span>
                         </div>
                     </div>
                     <div class="flex items-center space-x-1 shrink-0">
-                        <button onclick="openEditPrizeModal(${index})" class="p-2 text-white/40 hover:text-white transition rounded-xl hover:bg-white/10" title="Edit">
+                        <button onclick="openEditPrizeModal(${index})" class="p-2 text-white/45 hover:text-white transition rounded-xl hover:bg-white/10" title="Edit">
                             <i class="fa-solid fa-pen text-xs"></i>
                         </button>
-                        <button onclick="deletePrize(${index})" class="p-2 text-white/40 hover:text-rose-400 transition rounded-xl hover:bg-white/10" title="Delete">
+                        <button onclick="deletePrize(${index})" class="p-2 text-white/45 hover:text-rose-400 transition rounded-xl hover:bg-white/10" title="Delete">
                             <i class="fa-solid fa-trash text-xs"></i>
                         </button>
                     </div>
@@ -734,15 +862,61 @@
         function saveToLocalStorage() {
             localStorage.setItem('apple_mono_prizes', JSON.stringify(prizes));
             localStorage.setItem('apple_mono_history', JSON.stringify(history));
+            localStorage.setItem('apple_mono_stats', JSON.stringify(winStats));
         }
 
         function resetToDefault() {
             prizes = JSON.parse(JSON.stringify(defaultPrizes));
             history = [];
+            winStats = {};
             forcedNextPrizeId = "";
             renderPrizeList();
             renderHistoryList();
+            renderStatsList();
             showToast(t('resetToast'));
+        }
+
+        function shufflePrizes() {
+            for (let i = prizes.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [prizes[i], prizes[j]] = [prizes[j], prizes[i]];
+            }
+            renderPrizeList();
+            showToast(t('presetLoaded'));
+        }
+
+        function loadPreset(type) {
+            if (type === 'apple') {
+                prizes = [
+                    { id: 1, name: "iPhone 16 Pro", color: "#ffffff", icon: "📱", weight: 10 },
+                    { id: 2, name: "AirPods Max", color: "#e4e4e7", icon: "🎧", weight: 10 },
+                    { id: 3, name: "MacBook Pro", color: "#a1a1aa", icon: "💻", weight: 10 },
+                    { id: 4, name: "Apple Watch Ultra", color: "#52525b", icon: "⌚", weight: 10 },
+                    { id: 5, name: "iPad Pro M4", color: "#27272a", icon: "✏️", weight: 10 },
+                    { id: 6, name: "Apple Vision Pro", color: "#18181b", icon: "🥽", weight: 10 }
+                ];
+            } else if (type === 'decision') {
+                prizes = [
+                    { id: 1, name: "Definitely Yes", color: "#ffffff", icon: "✅", weight: 10 },
+                    { id: 2, name: "Probably Yes", color: "#d4d4d8", icon: "👍", weight: 10 },
+                    { id: 3, name: "Maybe", color: "#a1a1aa", icon: "🤔", weight: 10 },
+                    { id: 4, name: "Ask Later", color: "#71717a", icon: "⏳", weight: 10 },
+                    { id: 5, name: "Probably Not", color: "#3f3f46", icon: "👎", weight: 10 },
+                    { id: 6, name: "No Way", color: "#18181b", icon: "❌", weight: 10 }
+                ];
+            } else if (type === 'tasks') {
+                prizes = [
+                    { id: 1, name: "Coffee Break", color: "#ffffff", icon: "☕", weight: 10 },
+                    { id: 2, name: "Deep Coding", color: "#d4d4d8", icon: "💻", weight: 10 },
+                    { id: 3, name: "Code Review", color: "#a1a1aa", icon: "🔍", weight: 10 },
+                    { id: 4, name: "Team Sync", color: "#71717a", icon: "👥", weight: 10 },
+                    { id: 5, name: "Gym & Stretch", color: "#3f3f46", icon: "🏋️", weight: 10 },
+                    { id: 6, name: "Read Papers", color: "#18181b", icon: "📚", weight: 10 }
+                ];
+            }
+            renderPrizeList();
+            closeModal('presetsModal');
+            showToast(t('presetLoaded'));
         }
 
         function openAddPrizeModal() {
@@ -835,18 +1009,17 @@
             const subSliceOffsetDeg = (Math.random() * 0.7 + 0.15) * sliceAngleDeg;
             const targetSliceStartAngle = targetIndex * sliceAngleDeg;
             const desiredLandingAngleOnWheel = targetSliceStartAngle + subSliceOffsetDeg;
-
             const desiredNormalizedFinalRotation = (270 - desiredLandingAngleOnWheel + 360) % 360;
 
             const currentNormalized = currentRotation % 360;
             let diff = desiredNormalizedFinalRotation - currentNormalized;
             if (diff <= 0) diff += 360;
 
-            const extraFullSpins = (Math.floor(Math.random() * 3) + 7) * 360;
+            const extraFullSpins = (Math.floor(Math.random() * 3) + 8) * 360;
             const targetTotalRotation = currentRotation + extraFullSpins + diff;
 
             const startTime = performance.now();
-            const duration = 5600;
+            const duration = 5800;
             const startRotation = currentRotation;
 
             let lastSectorIndex = -1;
@@ -930,7 +1103,7 @@
         function toggleStealthMode(active) {
             const btn = document.getElementById('secretTriggerBtn');
             if (active) {
-                btn.style.opacity = "0.05";
+                btn.style.opacity = "0.04";
             } else {
                 btn.style.opacity = "1";
             }
@@ -961,7 +1134,7 @@
                 const row = document.createElement('div');
                 row.className = 'flex items-center justify-between space-x-3 liquid-glass-pill p-2.5 rounded-xl border border-white/10';
                 row.innerHTML = `
-                    <span class="text-xs text-white/90 font-medium truncate w-36">${escapeHtml(p.icon || '')} ${escapeHtml(p.name)}</span>
+                    <span class="text-xs text-white/95 font-medium truncate w-36">${escapeHtml(p.icon || '')} ${escapeHtml(p.name)}</span>
                     <div class="flex items-center space-x-2">
                         <input type="range" min="1" max="100" value="${p.weight || 10}" onchange="updateWeight(${idx}, this.value)" class="w-24 accent-white">
                         <span class="text-xs text-white font-mono w-8 text-right">${p.weight || 10}</span>
@@ -985,14 +1158,18 @@
             };
             history.unshift(record);
             if (history.length > 50) history.pop();
+
+            winStats[prize.name] = (winStats[prize.name] || 0) + 1;
+
             saveToLocalStorage();
             renderHistoryList();
+            renderStatsList();
         }
 
         function renderHistoryList() {
             const container = document.getElementById('historyListContainer');
             if (history.length === 0) {
-                container.innerHTML = `<p class="text-xs text-white/40 text-center py-8">${t('noRecords')}</p>`;
+                container.innerHTML = `<p class="text-xs text-white/45 text-center py-8">${t('noRecords')}</p>`;
                 return;
             }
             container.innerHTML = '';
@@ -1000,8 +1177,37 @@
                 const row = document.createElement('div');
                 row.className = 'flex items-center justify-between p-3 liquid-glass-pill rounded-2xl border border-white/10 text-xs';
                 row.innerHTML = `
-                    <span class="font-semibold text-white/90">${escapeHtml(item.icon)} ${escapeHtml(item.name)}</span>
-                    <span class="text-[10px] text-white/40 font-medium">${item.time}</span>
+                    <span class="font-semibold text-white/95">${escapeHtml(item.icon)} ${escapeHtml(item.name)}</span>
+                    <span class="text-[10px] text-white/45 font-medium">${item.time}</span>
+                `;
+                container.appendChild(row);
+            });
+        }
+
+        function renderStatsList() {
+            const container = document.getElementById('statsContentContainer');
+            const totalSpins = Object.values(winStats).reduce((a, b) => a + b, 0);
+            document.getElementById('totalSpinsCount').innerText = totalSpins;
+
+            if (totalSpins === 0) {
+                container.innerHTML = `<p class="text-xs text-white/45 text-center py-8">No win analytics recorded yet.</p>`;
+                return;
+            }
+
+            container.innerHTML = '';
+            prizes.forEach(prize => {
+                const count = winStats[prize.name] || 0;
+                const percentage = ((count / totalSpins) * 100).toFixed(1);
+                const row = document.createElement('div');
+                row.className = 'liquid-glass-pill p-3.5 rounded-2xl border border-white/10 space-y-2';
+                row.innerHTML = `
+                    <div class="flex justify-between items-center text-xs">
+                        <span class="font-semibold text-white/95">${escapeHtml(prize.icon || '')} ${escapeHtml(prize.name)}</span>
+                        <span class="font-mono text-white/70">${count} wins (${percentage}%)</span>
+                    </div>
+                    <div class="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+                        <div class="h-full bg-white rounded-full" style="width: ${percentage}%;"></div>
+                    </div>
                 `;
                 container.appendChild(row);
             });
@@ -1009,8 +1215,10 @@
 
         function clearHistory() {
             history = [];
+            winStats = {};
             saveToLocalStorage();
             renderHistoryList();
+            renderStatsList();
             showToast(t('logClearedToast'));
         }
 
@@ -1018,6 +1226,56 @@
             document.getElementById('winPrizeTitle').innerText = prize.name;
             document.getElementById('winPrizeIcon').innerText = prize.icon || '🏆';
             openModal('winModal');
+            startFireworks();
+        }
+
+        function startFireworks() {
+            const fwCanvas = document.getElementById('fireworksCanvas');
+            const fwCtx = fwCanvas.getContext('2d');
+            fwCanvas.width = fwCanvas.offsetWidth || window.innerWidth;
+            fwCanvas.height = fwCanvas.offsetHeight || window.innerHeight;
+
+            let particles = [];
+            for (let i = 0; i < 70; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const speed = Math.random() * 6 + 2;
+                particles.push({
+                    x: fwCanvas.width / 2,
+                    y: fwCanvas.height / 2,
+                    vx: Math.cos(angle) * speed,
+                    vy: Math.sin(angle) * speed,
+                    alpha: 1,
+                    decay: Math.random() * 0.015 + 0.010,
+                    size: Math.random() * 3 + 1
+                });
+            }
+
+            function fwLoop() {
+                fwCtx.clearRect(0, 0, fwCanvas.width, fwCanvas.height);
+                let active = false;
+                particles.forEach(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.vy += 0.08; // gravity
+                    p.alpha -= p.decay;
+                    if (p.alpha > 0) {
+                        active = true;
+                        fwCtx.save();
+                        fwCtx.globalAlpha = p.alpha;
+                        fwCtx.fillStyle = '#ffffff';
+                        fwCtx.beginPath();
+                        fwCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                        fwCtx.fill();
+                        fwCtx.restore();
+                    }
+                });
+                if (active) {
+                    requestAnimationFrame(fwLoop);
+                } else {
+                    fwCtx.clearRect(0, 0, fwCanvas.width, fwCanvas.height);
+                }
+            }
+            fwLoop();
         }
 
         function openModal(modalId) {
